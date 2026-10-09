@@ -50,7 +50,7 @@ for path, page in pages.items():
         elif url.fragment and dest in pages and unquote(url.fragment) not in pages[dest].ids:
             errors.append(f"Missing anchor: {path} → {href}")
 
-for route in ["index.html", "publications/index.html", "repo/index.html", "notes/index.html", "cv/index.html", "post/教程-硬刷biosx370主板成功进化/index.html"]:
+for route in ["index.html", "publications/index.html", "repo/index.html", "blog/index.html", "notes/index.html", "blog/2021/index.html", "blog/tag/bios/index.html", "blog/category/tutorials/index.html", "cv/index.html", "post/教程-硬刷biosx370主板成功进化/index.html"]:
     if root / route not in pages:
         errors.append(f"Missing page: {route}")
 

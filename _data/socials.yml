@@ -1,2 +1,6 @@
 email: ryang379@connect.hkust-gz.edu.cn
 github_username: RegiaYoung
+rss:
+  logo: fa-solid fa-square-rss
+  title: RSS
+  url: /index.xml

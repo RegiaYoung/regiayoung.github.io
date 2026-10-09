@@ -1,0 +1,90 @@
+{
+  "name": "regia.me native feature baseline",
+  "domain": "regia.me",
+  "config": {
+    "url": "https://regia.me",
+    "baseurl": "",
+    "theme": "al_folio_core",
+    "al_folio.api_version": 1,
+    "al_folio.style_engine": "tailwind",
+    "al_folio.features.cv.enabled": true,
+    "al_folio.features.distill.enabled": true,
+    "search_enabled": true,
+    "posts_in_search": true,
+    "bib_search": true,
+    "enable_darkmode": true,
+    "enable_math": true,
+    "enable_medium_zoom": true,
+    "enable_progressbar": true,
+    "enable_publication_thumbnails": true,
+    "pagination.enabled": true,
+    "related_blog_posts.enabled": true,
+    "permalink": "/blog/:year/:title/",
+    "jekyll-archives.posts.permalinks.year": "/blog/:year/",
+    "jekyll-archives.posts.permalinks.tags": "/blog/:type/:name/",
+    "jekyll-archives.posts.permalinks.categories": "/blog/:type/:name/",
+    "feed.path": "/index.xml"
+  },
+  "plugins": {
+    "al_folio_core": "al_folio_core",
+    "al_folio_cv": "al_folio_cv",
+    "al_folio_distill": "al_folio_distill",
+    "al_folio_upgrade": "al_folio_upgrade",
+    "al_search": "al_search",
+    "al_icons": "al_icons",
+    "al_math": "al_math",
+    "al_charts": "al_charts",
+    "al_img_tools": "al_img_tools",
+    "jekyll/scholar": "jekyll-scholar",
+    "jekyll-archives-v2": "jekyll-archives-v2",
+    "jekyll-paginate-v2": "jekyll-paginate-v2",
+    "jekyll-feed": "jekyll-feed",
+    "jekyll-sitemap": "jekyll-sitemap"
+  },
+  "pages": {
+    "_pages/about.md": {
+      "front_matter": {
+        "layout": "about",
+        "title": "About",
+        "permalink": "/",
+        "selected_papers": true,
+        "social": true,
+        "announcements.enabled": true,
+        "latest_posts.enabled": true
+      }
+    },
+    "_pages/publications.md": {
+      "front_matter": { "layout": "page", "title": "Publications", "permalink": "/publications/", "nav": true },
+      "native_patterns": ["include\\s+bib_search\\.liquid", "\\{%[-]?\\s*bibliography\\s*[-]?%\\}"]
+    },
+    "_pages/repo.md": {
+      "front_matter": { "layout": "page", "title": "Repo", "permalink": "/repo/", "nav": true },
+      "native_patterns": ["include\\s+repository/repo_user\\.liquid", "include\\s+repository/repo\\.liquid"]
+    },
+    "_pages/blog.md": {
+      "front_matter": { "layout": "default", "title": "Blog", "permalink": "/blog/", "nav": true, "pagination.enabled": true },
+      "native_patterns": [
+        "header-bar",
+        "post-list",
+        "featured_posts",
+        "post\\.thumbnail",
+        "post\\.tags",
+        "post\\.categories",
+        "include\\s+pagination\\.liquid"
+      ]
+    },
+    "_pages/cv.md": {
+      "front_matter": { "layout": "cv", "title": "CV", "permalink": "/cv/", "nav": true, "cv_format": "rendercv", "toc.sidebar": "left" }
+    },
+    "_posts/2021-09-25-x370-bios.html": {
+      "front_matter": { "layout": "post", "permalink": "/post/教程-硬刷biosx370主板成功进化/", "toc.sidebar": "left", "images.lightbox2": true },
+      "native_patterns": ["data-lightbox="]
+    }
+  },
+  "redirects": {
+    "/notes/": "/blog/",
+    "/archives/": "/blog/",
+    "/post/": "/blog/",
+    "/repositories/": "/repo/"
+  }
+}
