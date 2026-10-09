@@ -1,0 +1,4 @@
+interface:
+  display_name: "al-folio 网站维护"
+  short_description: "依照官方文档维护和升级个人网站，保留原生功能与已有内容"
+  default_prompt: "使用 $al-folio-maintain 更新或审查我的个人网站，并检查原生功能是否完整保留。"

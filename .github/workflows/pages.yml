@@ -29,6 +29,8 @@ jobs:
           cache: npm
       - run: npm ci
       - run: npm run lint:prettier
+      - name: Check native al-folio features
+        run: ruby .agents/skills/al-folio-maintain/scripts/check_native_features.rb --root .
       - run: bundle exec al-folio upgrade audit --no-fail
       - name: Build site
         env:

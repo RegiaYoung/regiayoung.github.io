@@ -71,6 +71,8 @@ Official guide: [Managing a custom domain](https://docs.github.com/en/pages/conf
 
 The [native feature audit](docs/native-feature-audit.md) records restored features, content-dependent options, and integrations that remain unconfigured. Check it before simplifying or disabling native functionality.
 
+Agents should use the repository's [al-folio maintenance skill](.agents/skills/al-folio-maintain/SKILL.md). It covers content updates, official documentation, dependency upgrades, and feature preservation. CI runs its read-only native feature check; update the policy only when an intentional site change requires it.
+
 Starter snapshot: `alshedivat/al-folio@d83066c21e6cdb9c0846e548a499064abe23e0ef`. Runtime gems and transitive dependencies are pinned in `Gemfile` / `Gemfile.lock`. There are no local layout, include, Sass, or runtime JavaScript overrides.
 
 Update gem pins and the lockfile deliberately, run the upgrade audit, then rebuild and check the site. Keep plugin activation in `_config.yml` aligned with `Gemfile`. See the [upstream maintenance guidance](https://github.com/alshedivat/al-folio/blob/main/docs/INSTALL.md#maintaining-dependencies).
