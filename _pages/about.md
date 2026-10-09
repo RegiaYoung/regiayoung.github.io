@@ -5,13 +5,15 @@ permalink: /
 subtitle: 杨锐佳 · PhD student, HKUST(GZ)
 profile: false
 selected_papers: true
-social: false
+social: true
 announcements:
   enabled: true
-  scrollable: false
-  limit: 3
+  scrollable: true
+  limit: 5
 latest_posts:
-  enabled: false
+  enabled: true
+  scrollable: true
+  limit: 3
 ---
 
 I am a PhD student in [Data Science and Analytics](https://www.hkust-gz.edu.cn/) at the Hong Kong University of Science and Technology (Guangzhou), advised by [Prof. Zeyi Wen](https://zeyiwen.github.io/). Previously, I studied at Sun Yat-sen University.
