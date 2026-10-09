@@ -2,7 +2,7 @@
 
 Academic homepage for **https://regia.me**, using [al-folio](https://github.com/alshedivat/al-folio) v1.x and Jekyll.
 
-Navigation: **About / Publications / Repo / Notes / CV**.
+Navigation: **About / Publications / Repo / Blog / CV**.
 
 ## Edit content
 
@@ -10,16 +10,22 @@ Navigation: **About / Publications / Repo / Notes / CV**.
 | ------------------------------- | -------------------------- |
 | Biography and homepage          | `_pages/about.md`          |
 | Publications (BibTeX)           | `_bibliography/papers.bib` |
-| Repository descriptions         | `_data/repositories.yml`   |
+| GitHub profiles, repos, status  | `_data/repositories.yml`   |
 | CV                              | `_data/cv.yml`             |
 | News                            | `_news/*.md`               |
-| Notes                           | `_posts/`                  |
+| Blog                            | `_posts/`                  |
 | Contact links                   | `_data/socials.yml`        |
 | Domain, metadata, feature flags | `_config.yml`              |
 
 The original 2021 BIOS article keeps its `/post/教程-硬刷biosx370主板成功进化/` permalink and original image paths. Its article text is preserved. The old generated Hugo pages and custom Python builder have been replaced by Jekyll source content; previous versions remain in git history.
 
 No photo, Google Scholar ID, or downloadable CV PDF is configured. Add these only when available. The CV page currently renders verified information from YAML.
+
+## Blog and repository pages
+
+Blog and Repo reuse al-folio's native starter pages and runtime includes. The blog supports thumbnails, reading time, year/tag/category archives, pagination (five posts per page), and optional featured posts (`featured: true`). Only existing tags and categories are shown; no demo posts are included. New posts belong in `_posts/YYYY-MM-DD-slug.md` with a `layout: post`, title, description, tags and categories. A `thumbnail` is optional. The old `/notes/` URL redirects to `/blog/`.
+
+Repository profile/stats cards use the native `github_users`, `github_repos`, and `repo_description_lines_max` settings in `_data/repositories.yml`. The additional `repositories` entries preserve code availability and paper links. Cards load public statistics from the upstream GitHub stats service; the direct GitHub links and code availability remain usable if that service is unavailable. Site search is enabled for pages, posts, and publications.
 
 ## Local development
 

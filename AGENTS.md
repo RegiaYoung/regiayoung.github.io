@@ -2,7 +2,7 @@
 
 This site uses al-folio v1.x, with pinned runtime gems. Keep changes in content, data, and configuration where possible. There are no local theme overrides.
 
-- Navigation: About / Publications / Repo / Notes / CV.
+- Navigation: About / Publications / Repo / Blog / CV.
 - Domain: https://regia.me, with an empty baseurl.
 - Keep the original BIOS article permalink and image paths intact.
 - Do not invent personal details, credentials, dates, photo, Scholar ID, or CV PDF.

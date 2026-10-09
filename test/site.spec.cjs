@@ -1,11 +1,34 @@
 const { test, expect } = require("@playwright/test");
 
+test("blog archives and the old notes address reach the preserved article", async ({ page }) => {
+  await page.goto("/notes/");
+  await expect(page).toHaveURL(/\/blog\/$/);
+  const title = "[教程] 硬刷BIOS！X370主板成功进化";
+  await expect(page.locator(".post-list .post-title")).toHaveText(title);
+  await expect(page.locator(".post-list img")).toBeVisible();
+  for (const route of ["/blog/2021/", "/blog/tag/hardware/", "/blog/tag/bios/", "/blog/category/tutorials/"]) {
+    await page.goto(route);
+    await page.getByRole("link", { name: title, exact: true }).click();
+    await expect(page.locator("h1")).toContainText("X370");
+  }
+});
+
+test("site search finds the original blog article", async ({ page }) => {
+  await page.goto("/blog/");
+  await page.keyboard.press("Control+k");
+  const input = page.getByRole("textbox", { name: "Type to start searching" });
+  await expect(input).toBeVisible();
+  await input.fill("X370");
+  await page.locator("ninja-keys").getByText("[教程] 硬刷BIOS！X370主板成功进化", { exact: true }).click();
+  await expect(page.locator("h1")).toContainText("X370");
+});
+
 test("navigation, theme, and publication controls work", async ({ page }) => {
   await page.goto("/");
   await expect(page.locator("h1")).toContainText("Ruijia");
   const nav = page.locator("#navbarNav a.nav-link");
   await expect(nav).toHaveCount(5);
-  for (const label of ["About", "Publications", "Repo", "Notes", "CV"]) {
+  for (const label of ["About", "Publications", "Repo", "Blog", "CV"]) {
     await expect(page.locator("#navbarNav").getByRole("link", { name: label, exact: false })).toBeVisible();
   }
   const before = await page.locator("html").getAttribute("data-theme-setting");
@@ -23,7 +46,7 @@ test("mobile navigation and archived article remain usable", async ({ page }) =>
   await page.setViewportSize({ width: 390, height: 844 });
   await page.goto("/");
   await page.getByRole("button", { name: "Toggle navigation" }).click();
-  await page.locator("#navbarNav").getByRole("link", { name: "Notes", exact: true }).click();
+  await page.locator("#navbarNav").getByRole("link", { name: "Blog", exact: true }).click();
   await page.getByRole("link", { name: "[教程] 硬刷BIOS！X370主板成功进化", exact: true }).click();
   await expect(page.locator("h1")).toContainText("X370");
   await page.locator("article img").evaluateAll((images) => images.forEach((img) => (img.loading = "eager")));

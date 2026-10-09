@@ -52,7 +52,7 @@ al_folio:
     auto_apply_safe_fixes: false
 navbar_fixed: true
 footer_fixed: false
-search_enabled: false
+search_enabled: true
 socials_in_search: true
 posts_in_search: true
 bib_search: false
@@ -69,12 +69,12 @@ analytics:
 enable_simple_analytics: false
 google_site_verification: null
 bing_site_verification: null
-blog_name: Notes
-blog_description: Technical notes and things I have learned along the way.
-permalink: /notes/:year/:title/
+blog_name: Ruijia's Blog
+blog_description: Notes on systems, research, and hardware.
+permalink: /blog/:year/:title/
 lsi: false
 pagination:
-  enabled: false
+  enabled: true
 related_blog_posts:
   enabled: false
 giscus:
@@ -200,9 +200,13 @@ terser:
     drop_console: true
 jekyll-archives:
   posts:
-    enabled: []
-display_tags: []
-display_categories: []
+    enabled: [year, tags, categories]
+    permalinks:
+      year: "/blog/:year/"
+      tags: "/blog/:type/:name/"
+      categories: "/blog/:type/:name/"
+display_tags: [hardware, bios]
+display_categories: [tutorials]
 scholar:
   last_name:
     - Yang
