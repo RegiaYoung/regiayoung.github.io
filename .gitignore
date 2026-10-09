@@ -1,4 +1,10 @@
+_site/
+.sass-cache/
+.jekyll-cache/
+.jekyll-metadata
+.bundle/
+vendor/
 node_modules/
-qa/
-__pycache__/
-.DS_Store
+test-results/
+playwright-report/
+al-folio-upgrade-report.md

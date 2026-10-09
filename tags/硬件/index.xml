@@ -1,39 +1,0 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
-  <channel>
-    <title>硬件 on Arclight—Okabe&#39;s Notes</title>
-    <link>https://arclight.top/tags/%E7%A1%AC%E4%BB%B6/</link>
-    <description>Recent content in 硬件 on Arclight—Okabe&#39;s Notes</description>
-    <generator>Hugo -- gohugo.io</generator>
-    <language>en</language>
-    <lastBuildDate>Sat, 25 Sep 2021 12:40:20 +0800</lastBuildDate><atom:link href="https://arclight.top/tags/%E7%A1%AC%E4%BB%B6/index.xml" rel="self" type="application/rss+xml" />
-    <item>
-      <title>[教程] 硬刷BIOS！X370主板成功进化</title>
-      <link>https://arclight.top/post/%E6%95%99%E7%A8%8B-%E7%A1%AC%E5%88%B7biosx370%E4%B8%BB%E6%9D%BF%E6%88%90%E5%8A%9F%E8%BF%9B%E5%8C%96/</link>
-      <pubDate>Sat, 25 Sep 2021 12:40:20 +0800</pubDate>
-      
-      <guid>https://arclight.top/post/%E6%95%99%E7%A8%8B-%E7%A1%AC%E5%88%B7biosx370%E4%B8%BB%E6%9D%BF%E6%88%90%E5%8A%9F%E8%BF%9B%E5%8C%96/</guid>
-      <description>​	总所周知，由于农企(AMD)想赚钱了，X370不再支持ZEN3，但我们可以发现，大多数厂商的X470其实就是X370的马甲，而X470是被允许支持5000系锐龙的。作为红色阵营的忠实用户，手上用了四年的正是一套R7 1700+华擎X370killer。
-killermaster
- 这两张板子的参数和设计基本上一模一样，不说是一模一样也是亲生父子，
- ​	都说华擎自古出妖板，之前就已经爆料称370主板的ZEN3 bios其实已经做好，只是受到农企的压力无法发布。把结果告诉你们，刷了X470bios的主板完美运行，甚至整机运行更加稳定了！
-​	下面开始写教程，所需的文件如果找不着，我会另外提供
-材料准备  U盘一个 rufus Flashrom 华擎X470 BIOS  制作MS-DOS启动盘 MSDOS是一个比你还老的系统，从win10开始，微软就不再为你提供制作MSDOS所需的环境。话虽如此，其实只是缺少了一个叫 discopy.dll的设置文件，我们只需要下载到这个文件，然后放到系统盘的WIndows/System32/路径下就能利用rufus正常安装
-这个文件很容易在网络上找到，这里给出一个&amp;lt;www.dllzy.com/diskcopy.dll&amp;gt;下载MD5开头为281的win7版本即可。
-具体操作文档可以参考overclock论坛上stilt老哥给出的资料，这个操作能成功主要靠这篇文章提供的思路和工具
-然后捏，rufus推荐去下载论坛里提供的Rufus_3.8.1579_Win10_MSDOS-Mod
-rufus
-全部默认安装即可
-准备BIOS以及Flashrom flashrom是开源的内存刷写工具，此处使用stilt提供的flashrom，支持列表在stilt页面有，只要你想要刷成的型号上面有，就能使用这版flashrom
-然后将下载的x470大师版BIOS p3.50更名为X470TC.bin，此处更名只是为了方便，但一定要改成bin形式, 以在dos下读写
-将BIOS和flashrom解压出的文件放在u盘的根目录
-DOS下刷写 重新启动，启动项选择你的u盘，进入dos后输入一下
-dir 列出文件 flashrom-pinternal 然后检查SPI控制器和Flash部件本身是否被正确检测到 flashrom-pinternal-rBACKUP.BIN 备份BIOS flashrom-pinternal-wX470TC.BIN 开始刷入，时间约5-15分钟 刷入完成后重启即可
-DOs
-祝您成功 bioswin
-结语 ​	刷写后你的板子就成功更新了一代，目前没有发现任何副作用，除了内存频率可以调的更高了😅，变成470之后就可以直接在bios里更新470最新的BIOS，已经有人成功点亮了5600，据说还能支持pcie4？ 没钱买新cpu，亟待验证
-​	下面给出部分文件的百度云, https://pan.baidu.com/s/1EEBJ5zSbrkRKdkW4RrjRYw，提取码：hbhe</description>
-    </item>
-    
-  </channel>
-</rss>

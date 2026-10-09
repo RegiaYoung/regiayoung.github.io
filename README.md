@@ -1,52 +1,70 @@
 # Ruijia Yang's personal website
 
-An English research homepage for Ruijia Yang, with selected publications,
-research projects, news, experience, and an archive of the original Arclight
-hardware post. This site is static and requires no frontend dependencies.
+Academic homepage for **https://regia.me**, using [al-folio](https://github.com/alshedivat/al-folio) v1.x and Jekyll.
 
-## Update the website
+Navigation: **About / Publications / Repo / Notes / CV**.
 
-1. Edit `content/site.json` to update publications, news, contact links, or the
-   canonical domain. Edit `templates/home.html` for biography and experience.
-2. Run `python3 scripts/build.py` from this directory.
-3. Commit the source files and generated HTML together. The repository root
-   remains the GitHub Pages publishing directory.
+## Edit content
 
-CSS and browser interactions live in `assets/site.css` and `assets/site.js`.
-Core content and links work without JavaScript. JavaScript adds theme
-switching, publication filters, and citation copying; BibTeX is always readable.
-All assets for the new design are local, with no external font, icon, or runtime
-dependencies. Layouts adapt to desktop and mobile, respect reduced motion,
-include keyboard focus indicators, and support light/dark themes.
+| Content                         | File                       |
+| ------------------------------- | -------------------------- |
+| Biography and homepage          | `_pages/about.md`          |
+| Publications (BibTeX)           | `_bibliography/papers.bib` |
+| Repository descriptions         | `_data/repositories.yml`   |
+| CV                              | `_data/cv.yml`             |
+| News                            | `_news/*.md`               |
+| Notes                           | `_posts/`                  |
+| Contact links                   | `_data/socials.yml`        |
+| Domain, metadata, feature flags | `_config.yml`              |
 
-To preview locally, run `python3 -m http.server 8000`, then open
-`http://localhost:8000/`. To verify a project-site prefix, serve this directory
-from its parent and open its folder path instead.
+The original 2021 BIOS article keeps its `/post/教程-硬刷biosx370主板成功进化/` permalink and original image paths. Its article text is preserved. The old generated Hugo pages and custom Python builder have been replaced by Jekyll source content; previous versions remain in git history.
 
-## Original content and URLs
+No photo, Google Scholar ID, or downloadable CV PDF is configured. Add these only when available. The CV page currently renders verified information from YAML.
 
-The original BIOS article stays at
-`post/教程-硬刷biosx370主板成功进化/`. Its text is preserved in
-`content/archive-body.html`; only the surrounding layout and displayed image
-sizes change. Full image links still point to the original source images.
-Old test posts, assets, archive paths, and the `CNAME` file remain in the base
-repository. `/about/` redirects to the new biography section. Existing legacy
-blog pages retain their original layout unless explicitly migrated.
+## Local development
 
-The original `CNAME` is `arclight.top`. Its present availability has not been
-verified. Canonical metadata currently follows that existing configuration;
-change `base_url` and `CNAME` together if moving to another domain. Renaming the
-repository or changing Pages settings is a separate hosting operation.
+Use Ruby 3.3.5, Bundler 4.0.6, Node.js 22, and Python 3.
 
-## Content sources
+```sh
+bundle install
+npm ci
+bundle exec jekyll serve
+```
 
-- SlideFormer: https://arxiv.org/abs/2603.16428 and
-  https://github.com/RegiaYoung/SlideFormer
-- SlideDP: https://arxiv.org/abs/2609.34162 and
-  https://github.com/RegiaYoung/SlideDP
-- Efficient Mask Learning: https://zeyiwen.github.io/papers/cikm2025_masking.pdf
-- Advisor and PhD cohort: https://zeyiwen.github.io/students.html
+Open `http://localhost:4000/`. Unlike the upstream demo, this site has an **empty baseurl** because it is hosted at the root of a custom domain.
 
-SlideDP is labeled a preprint. Its repository currently releases a reference
-multi-GPU extension; the optimized runtime in the paper is forthcoming.
-No private research drafts or submission statuses are included.
+```sh
+npm run lint:prettier
+bundle exec al-folio upgrade audit --no-fail
+JEKYLL_ENV=production bundle exec jekyll build
+python3 scripts/check_site.py
+npx playwright install chromium
+npm run test:site
+```
+
+## Publishing and domain setup
+
+The workflow builds and checks pull requests without deploying them. It deploys only the `main` branch, after checks pass. In repository **Settings → Pages**, select **GitHub Actions** as the publishing source.
+
+Set **Custom domain** to `regia.me` in GitHub Pages settings, then configure the domain's DNS provider. For an apex domain using A records, GitHub currently documents these four values:
+
+```text
+185.199.108.153
+185.199.109.153
+185.199.110.153
+185.199.111.153
+```
+
+Optional: point a `www` CNAME at `regiayoung.github.io`. Enable **Enforce HTTPS** when GitHub has issued the certificate. DNS propagation and certificate provisioning may take time.
+
+The repository's `CNAME` records the intended domain; with a custom Actions workflow, the domain must also be set in GitHub Pages settings. Editing that file alone does not bind the domain. This migration does not change DNS or Pages administration settings.
+
+Official guide: [Managing a custom domain](https://docs.github.com/en/pages/configuring-a-custom-domain-for-your-github-pages-site/managing-a-custom-domain-for-your-github-pages-site).
+
+## Theme maintenance
+
+Starter snapshot: `alshedivat/al-folio@d83066c21e6cdb9c0846e548a499064abe23e0ef`. Runtime gems and transitive dependencies are pinned in `Gemfile` / `Gemfile.lock`. There are no local layout, include, Sass, or runtime JavaScript overrides.
+
+Update gem pins and the lockfile deliberately, run the upgrade audit, then rebuild and check the site. Keep plugin activation in `_config.yml` aligned with `Gemfile`. See the [upstream maintenance guidance](https://github.com/alshedivat/al-folio/blob/main/docs/INSTALL.md#maintaining-dependencies).
+
+The al-folio template is used under its MIT license; see `LICENSE`. Article content remains the author's own work.

@@ -1,0 +1,6 @@
+_site/
+vendor/
+node_modules/
+post/
+_posts/2021-09-25-x370-bios.html
+Gemfile.lock

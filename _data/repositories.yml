@@ -1,0 +1,15 @@
+repositories:
+  - name: SlideFormer
+    url: https://github.com/RegiaYoung/SlideFormer
+    description: Full-parameter LLM fine-tuning on a single GPU through layer-sliding
+      execution and CPU/GPU/NVMe pipelining.
+    status: Runtime, reproducibility scripts, and documentation available.
+    paper: https://arxiv.org/abs/2603.16428
+    venue: DAC 2026
+  - name: SlideDP
+    url: https://github.com/RegiaYoung/SlideDP
+    description: Scaling host-resident LLM fine-tuning across multiple GPUs with synchronous
+      data parallelism.
+    status: Reference multi-GPU extension available; the optimized runtime is forthcoming.
+    paper: https://arxiv.org/abs/2609.34162
+    venue: Preprint, 2026
