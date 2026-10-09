@@ -1,0 +1,55 @@
+cv:
+  name: Ruijia Yang
+  label: PhD student
+  email: ryang379@connect.hkust-gz.edu.cn
+  location: Guangzhou, China
+  social_networks:
+    - network: GitHub
+      username: RegiaYoung
+  sections:
+    Education:
+      - institution: Hong Kong University of Science and Technology (Guangzhou)
+        area: Data Science and Analytics
+        studyType: PhD
+        start_date: "2024"
+        end_date: present
+        highlights:
+          - "Advisor: Prof. Zeyi Wen"
+      - institution: Sun Yat-sen University
+        studyType: Undergraduate studies
+    Research interests:
+      - bullet: Memory-efficient LLM training, heterogeneous CPU/GPU/NVMe execution, and distributed fine-tuning.
+    Publications:
+      - title: "SlideDP: Scaling Host-Resident LLM Fine-Tuning Across Multiple GPUs"
+        authors:
+          - Ruijia Yang
+          - Shiyuan Lin
+          - Yulong Ao
+          - Zhiyu Li
+          - Yingli Zhao
+          - Xianduo Li
+          - Yonghua Lin
+          - Zeyi Wen
+        publisher: Preprint
+        releaseDate: "2026"
+        url: https://arxiv.org/abs/2609.34162
+      - title: An Efficient Heterogeneous Co-Design for Fine-Tuning on a Single GPU
+        authors:
+          - Ruijia Yang
+          - Zeyi Wen
+        publisher: DAC 2026
+        releaseDate: "2026"
+        url: https://arxiv.org/abs/2603.16428
+      - title: Efficient Mask Learning for Language Model Fine-Tuning
+        authors:
+          - Minping Chen
+          - Ruijia Yang
+          - Zeyi Wen
+        publisher: CIKM 2025
+        releaseDate: "2025"
+        url: https://doi.org/10.1145/3746252.3761178
+    Teaching:
+      - label: "DSAA 2042: Computer Architecture and Systems"
+        details: Teaching Assistant, HKUST(GZ), Summer 2026.
+      - label: Automated Machine Learning
+        details: Teaching Assistant, HKUST(GZ).

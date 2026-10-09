@@ -1,0 +1,170 @@
+---
+layout: post
+title: "[教程] 硬刷BIOS！X370主板成功进化"
+date: 2021-09-25
+permalink: /post/教程-硬刷biosx370主板成功进化/
+lang: zh-CN
+language_label: 中文
+description: 从旧博客保留的一篇硬件折腾记录：为华擎 X370 主板刷入 X470 BIOS。
+related_posts: false
+---
+<div style="overflow-wrap: anywhere">
+
+<p><em>Originally published on September 25, 2021. Preserved from my earlier blog.</em></p>
+
+    <p>​	总所周知，由于农企(AMD)想赚钱了，X370不再支持ZEN3，但我们可以发现，大多数厂商的X470其实就是X370的马甲，而X470是被允许支持5000系锐龙的。作为红色阵营的忠实用户，手上用了四年的正是一套R7 1700+华擎X370killer。</p>
+<p><figure 
+	
+		class="gallery-image" 
+		style="
+			flex-grow: 232; 
+			flex-basis: 558px"
+	>
+	<a href="/post/%E6%95%99%E7%A8%8B-%E7%A1%AC%E5%88%B7biosx370%E4%B8%BB%E6%9D%BF%E6%88%90%E5%8A%9F%E8%BF%9B%E5%8C%96/3.png" data-size="2498x1074">
+		<img class="img-fluid" src="/post/%E6%95%99%E7%A8%8B-%E7%A1%AC%E5%88%B7biosx370%E4%B8%BB%E6%9D%BF%E6%88%90%E5%8A%9F%E8%BF%9B%E5%8C%96/3.png"
+			width="2498"
+			height="1074"
+			srcset="/post/%E6%95%99%E7%A8%8B-%E7%A1%AC%E5%88%B7biosx370%E4%B8%BB%E6%9D%BF%E6%88%90%E5%8A%9F%E8%BF%9B%E5%8C%96/3_hu3619a0002aaac50dd31af387cba0850c_1064633_480x0_resize_box_3.png 480w, /post/%E6%95%99%E7%A8%8B-%E7%A1%AC%E5%88%B7biosx370%E4%B8%BB%E6%9D%BF%E6%88%90%E5%8A%9F%E8%BF%9B%E5%8C%96/3_hu3619a0002aaac50dd31af387cba0850c_1064633_1024x0_resize_box_3.png 1024w"
+			loading="lazy"
+			alt="killer">
+	</a>
+	
+	<figcaption>killer</figcaption>
+	
+</figure><figure 
+	
+		class="gallery-image" 
+		style="
+			flex-grow: 255; 
+			flex-basis: 614px"
+	>
+	<a href="/post/%E6%95%99%E7%A8%8B-%E7%A1%AC%E5%88%B7biosx370%E4%B8%BB%E6%9D%BF%E6%88%90%E5%8A%9F%E8%BF%9B%E5%8C%96/4.png" data-size="2587x1011">
+		<img class="img-fluid" src="/post/%E6%95%99%E7%A8%8B-%E7%A1%AC%E5%88%B7biosx370%E4%B8%BB%E6%9D%BF%E6%88%90%E5%8A%9F%E8%BF%9B%E5%8C%96/4.png"
+			width="2587"
+			height="1011"
+			srcset="/post/%E6%95%99%E7%A8%8B-%E7%A1%AC%E5%88%B7biosx370%E4%B8%BB%E6%9D%BF%E6%88%90%E5%8A%9F%E8%BF%9B%E5%8C%96/4_hu6f17a03c5f71c122837efbfb2f8eae24_1587720_480x0_resize_box_3.png 480w, /post/%E6%95%99%E7%A8%8B-%E7%A1%AC%E5%88%B7biosx370%E4%B8%BB%E6%9D%BF%E6%88%90%E5%8A%9F%E8%BF%9B%E5%8C%96/4_hu6f17a03c5f71c122837efbfb2f8eae24_1587720_1024x0_resize_box_3.png 1024w"
+			loading="lazy"
+			alt="master">
+	</a>
+	
+	<figcaption>master</figcaption>
+	
+</figure></p>
+<blockquote>
+<p>这两张板子的参数和设计基本上一模一样，不说是一模一样也是亲生父子，</p>
+</blockquote>
+<p>​	都说华擎自古出妖板，之前就已经爆料称370主板的ZEN3 bios其实已经做好，只是受到农企的压力无法发布。把结果告诉你们，刷了X470bios的主板完美运行，甚至整机运行更加稳定了！</p>
+<p>​	下面开始写教程，所需的文件如果找不着，我会另外提供</p>
+<h2 id="材料准备">材料准备</h2>
+<ol>
+<li>U盘一个</li>
+<li>rufus</li>
+<li>Flashrom</li>
+<li>华擎X470 BIOS</li>
+</ol>
+<h2 id="制作ms-dos启动盘">制作MS-DOS启动盘</h2>
+<p>MSDOS是一个比你还老的系统，从win10开始，微软就不再为你提供制作MSDOS所需的环境。话虽如此，其实只是缺少了一个叫<code> discopy.dll</code>的设置文件，我们只需要下载到这个文件，然后放到系统盘的<code>WIndows/System32/</code>路径下就能利用rufus正常安装</p>
+<p>这个文件很容易在网络上找到，这里给出一个&lt;www.dllzy.com/diskcopy.dll&gt;下载MD5开头为281的win7版本即可。</p>
+<p>具体操作文档可以参考overclock论坛上<a class="link" href="https://www.overclock.net/threads/agesa-fw-stack-patched-bioses-for-3rd-gen.1733304/"  target="_blank" rel="noopener"
+    >stilt老哥</a>给出的资料，这个操作能成功主要靠这篇文章提供的思路和工具</p>
+<p>然后捏，rufus推荐去下载论坛里提供的<a class="link" href="https://1drv.ms/u/s!Ag6oE4SOsCmDhXE_kUI1LFf0NB8O"  target="_blank" rel="noopener"
+    >Rufus_3.8.1579_Win10_MSDOS-Mod</a></p>
+<p><figure 
+	
+		class="gallery-image" 
+		style="
+			flex-grow: 73; 
+			flex-basis: 177px"
+	>
+	<a href="/post/%E6%95%99%E7%A8%8B-%E7%A1%AC%E5%88%B7biosx370%E4%B8%BB%E6%9D%BF%E6%88%90%E5%8A%9F%E8%BF%9B%E5%8C%96/2.png" data-size="766x1036">
+		<img class="img-fluid" src="/post/%E6%95%99%E7%A8%8B-%E7%A1%AC%E5%88%B7biosx370%E4%B8%BB%E6%9D%BF%E6%88%90%E5%8A%9F%E8%BF%9B%E5%8C%96/2.png"
+			width="766"
+			height="1036"
+			srcset="/post/%E6%95%99%E7%A8%8B-%E7%A1%AC%E5%88%B7biosx370%E4%B8%BB%E6%9D%BF%E6%88%90%E5%8A%9F%E8%BF%9B%E5%8C%96/2_hu604633f3272f74540e3e5f472f6a0641_55640_480x0_resize_box_3.png 480w, /post/%E6%95%99%E7%A8%8B-%E7%A1%AC%E5%88%B7biosx370%E4%B8%BB%E6%9D%BF%E6%88%90%E5%8A%9F%E8%BF%9B%E5%8C%96/2_hu604633f3272f74540e3e5f472f6a0641_55640_1024x0_resize_box_3.png 1024w"
+			loading="lazy"
+			alt="rufus">
+	</a>
+	
+	<figcaption>rufus</figcaption>
+	
+</figure></p>
+<p>全部默认安装即可</p>
+<h2 id="准备bios以及flashrom">准备BIOS以及Flashrom</h2>
+<p>flashrom是开源的内存刷写工具，此处使用stilt提供的flashrom，支持列表在<a class="link" href="https://www.overclock.net/threads/agesa-fw-stack-patched-bioses-for-3rd-gen.1733304/"  target="_blank" rel="noopener"
+    >stilt</a>页面有，只要你想要刷成的型号上面有，就能使用这版flashrom</p>
+<p>然后将下载的x470大师版BIOS p3.50更名为X470TC.bin，此处更名只是为了方便，但一定要改成bin形式, 以在dos下读写</p>
+<p>将BIOS和flashrom解压出的文件放在u盘的根目录</p>
+<h2 id="dos下刷写">DOS下刷写</h2>
+<p>重新启动，启动项选择你的u盘，进入dos后输入一下</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-basic" data-lang="basic"><span class="vg">dir</span>
+<span class="vg">列出文件</span>
+<span class="vg">flashrom</span><span class="w"> </span><span class="o">-</span><span class="vg">p</span><span class="w"> </span><span class="vg">internal</span>
+<span class="vg">然后检查SPI控制器和Flash部件本身是否被正确检测到</span>
+<span class="vg">flashrom</span><span class="w"> </span><span class="o">-</span><span class="vg">p</span><span class="w"> </span><span class="vg">internal</span><span class="w"> </span><span class="o">-</span><span class="vg">r</span><span class="w"> </span><span class="vg">BACKUP</span><span class="o">.</span><span class="vg">BIN</span>
+<span class="vg">备份BIOS</span>
+<span class="vg">flashrom</span><span class="w"> </span><span class="o">-</span><span class="vg">p</span><span class="w"> </span><span class="vg">internal</span><span class="w"> </span><span class="o">-</span><span class="vg">w</span><span class="w"> </span><span class="vg">X470TC</span><span class="o">.</span><span class="vg">BIN</span>
+<span class="vg">开始刷入</span><span class="err">，</span><span class="vg">时间约5</span><span class="il">-15</span><span class="vg">分钟</span>
+</code></pre></div><p>刷入完成后重启即可</p>
+<p><figure 
+	
+		class="gallery-image" 
+		style="
+			flex-grow: 133; 
+			flex-basis: 320px"
+	>
+	<a href="/post/%E6%95%99%E7%A8%8B-%E7%A1%AC%E5%88%B7biosx370%E4%B8%BB%E6%9D%BF%E6%88%90%E5%8A%9F%E8%BF%9B%E5%8C%96/5.jpg" data-size="5632x4224">
+		<img class="img-fluid" src="/post/%E6%95%99%E7%A8%8B-%E7%A1%AC%E5%88%B7biosx370%E4%B8%BB%E6%9D%BF%E6%88%90%E5%8A%9F%E8%BF%9B%E5%8C%96/5.jpg"
+			width="5632"
+			height="4224"
+			srcset="/post/%E6%95%99%E7%A8%8B-%E7%A1%AC%E5%88%B7biosx370%E4%B8%BB%E6%9D%BF%E6%88%90%E5%8A%9F%E8%BF%9B%E5%8C%96/5_hu652e22b9cd8b6d963319461af82bf27b_4557986_480x0_resize_q75_box.jpg 480w, /post/%E6%95%99%E7%A8%8B-%E7%A1%AC%E5%88%B7biosx370%E4%B8%BB%E6%9D%BF%E6%88%90%E5%8A%9F%E8%BF%9B%E5%8C%96/5_hu652e22b9cd8b6d963319461af82bf27b_4557986_1024x0_resize_q75_box.jpg 1024w"
+			loading="lazy"
+			alt="DOs">
+	</a>
+	
+	<figcaption>DOs</figcaption>
+	
+</figure></p>
+<h2 id="祝您成功">祝您成功</h2>
+<p><figure 
+	
+		class="gallery-image" 
+		style="
+			flex-grow: 100; 
+			flex-basis: 240px"
+	>
+	<a href="/post/%E6%95%99%E7%A8%8B-%E7%A1%AC%E5%88%B7biosx370%E4%B8%BB%E6%9D%BF%E6%88%90%E5%8A%9F%E8%BF%9B%E5%8C%96/6.png" data-size="503x502">
+		<img class="img-fluid" src="/post/%E6%95%99%E7%A8%8B-%E7%A1%AC%E5%88%B7biosx370%E4%B8%BB%E6%9D%BF%E6%88%90%E5%8A%9F%E8%BF%9B%E5%8C%96/6.png"
+			width="503"
+			height="502"
+			srcset="/post/%E6%95%99%E7%A8%8B-%E7%A1%AC%E5%88%B7biosx370%E4%B8%BB%E6%9D%BF%E6%88%90%E5%8A%9F%E8%BF%9B%E5%8C%96/6_hu35fdee618b49a8207cefe876a28ca8bf_68363_480x0_resize_box_3.png 480w, /post/%E6%95%99%E7%A8%8B-%E7%A1%AC%E5%88%B7biosx370%E4%B8%BB%E6%9D%BF%E6%88%90%E5%8A%9F%E8%BF%9B%E5%8C%96/6_hu35fdee618b49a8207cefe876a28ca8bf_68363_1024x0_resize_box_3.png 1024w"
+			loading="lazy"
+			alt="bios">
+	</a>
+	
+	<figcaption>bios</figcaption>
+	
+</figure><figure 
+	
+		class="gallery-image" 
+		style="
+			flex-grow: 133; 
+			flex-basis: 320px"
+	>
+	<a href="/post/%E6%95%99%E7%A8%8B-%E7%A1%AC%E5%88%B7biosx370%E4%B8%BB%E6%9D%BF%E6%88%90%E5%8A%9F%E8%BF%9B%E5%8C%96/7.jpg" data-size="5632x4224">
+		<img class="img-fluid" src="/post/%E6%95%99%E7%A8%8B-%E7%A1%AC%E5%88%B7biosx370%E4%B8%BB%E6%9D%BF%E6%88%90%E5%8A%9F%E8%BF%9B%E5%8C%96/7.jpg"
+			width="5632"
+			height="4224"
+			srcset="/post/%E6%95%99%E7%A8%8B-%E7%A1%AC%E5%88%B7biosx370%E4%B8%BB%E6%9D%BF%E6%88%90%E5%8A%9F%E8%BF%9B%E5%8C%96/7_hu77e3da3d950f50c7250453f8da28d41f_4193871_480x0_resize_q75_box.jpg 480w, /post/%E6%95%99%E7%A8%8B-%E7%A1%AC%E5%88%B7biosx370%E4%B8%BB%E6%9D%BF%E6%88%90%E5%8A%9F%E8%BF%9B%E5%8C%96/7_hu77e3da3d950f50c7250453f8da28d41f_4193871_1024x0_resize_q75_box.jpg 1024w"
+			loading="lazy"
+			alt="win">
+	</a>
+	
+	<figcaption>win</figcaption>
+	
+</figure></p>
+<h2 id="结语">结语</h2>
+<p>​	刷写后你的板子就成功更新了一代，目前没有发现任何副作用，除了内存频率可以调的更高了😅，变成470之后就可以直接在bios里更新470最新的BIOS，已经有人成功点亮了5600，据说还能支持pcie4？ 没钱买新cpu，亟待验证</p>
+<p>​	下面给出部分文件的百度云, <a class="link" href="https://pan.baidu.com/s/1EEBJ5zSbrkRKdkW4RrjRYw"  target="_blank" rel="noopener"
+    >https://pan.baidu.com/s/1EEBJ5zSbrkRKdkW4RrjRYw</a>，提取码：<code>hbhe</code></p>
+
+</div>

@@ -1,0 +1,10 @@
+_site/
+.sass-cache/
+.jekyll-cache/
+.jekyll-metadata
+.bundle/
+vendor/
+node_modules/
+test-results/
+playwright-report/
+al-folio-upgrade-report.md
