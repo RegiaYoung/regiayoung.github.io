@@ -25,6 +25,8 @@ The installed native plugins still provide syntax highlighting/code copy, tabs (
 
 No local layout, include, CSS, or JavaScript overrides have been introduced. Blog and Repo retain the upstream starter page structures, with personal content and navigation changes.
 
+The CV update on 2026-10-10 adds a site-owned data adapter, `_plugins/cv_publications.rb`, rather than a template override. It populates the native CV publication fields from the same `papers.bib` used by Publications at each build, including authors via the supported `summary` field and existing paper/code links. Education, honors, and other CV sections still use the native renderer and sidebar. Scholarship date ranges use en dashes to preserve both endpoints in its date badges.
+
 ## Deliberate exclusions and setup still required
 
 | Feature                                                | Current state and reason                                                                                                                | To use it                                                                                                                             |

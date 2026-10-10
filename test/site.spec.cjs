@@ -28,6 +28,29 @@ test("publication filtering and native CV section navigation work", async ({ pag
   await expect(page).toHaveURL(/#teaching$/);
 });
 
+test("CV reuses bibliography data and renders confirmed education, awards, and teaching", async ({ page }) => {
+  await page.goto("/publications/");
+  const titles = (await page.locator(".bibliography .title").allTextContents()).map((title) => title.trim());
+  await page.goto("/cv/");
+  const publications = page.locator("#publications + .card");
+  await expect(publications.locator(".title")).toHaveText(titles);
+  const slidedp = publications.locator("li").filter({ hasText: "SlideDP:" });
+  await expect(slidedp).toContainText("Ruijia Yang, Shiyuan Lin, Yulong Ao, Zhiyu Li, Yingli Zhao, Xianduo Li, Yonghua Lin, Zeyi Wen.");
+  await expect(slidedp.getByRole("link", { name: "PDF", exact: true })).toHaveAttribute("href", "https://arxiv.org/pdf/2609.34162");
+  await expect(slidedp.getByRole("link", { name: "Code", exact: true })).toHaveAttribute("href", "https://github.com/RegiaYoung/SlideDP");
+  await expect(page.locator("#education + .card")).toContainText("Bachelor of Engineering");
+  const awards = page.locator("#honors-and-awards + .card");
+  await expect(awards).toContainText("Advisor to the HKUST(GZ) team.");
+  await expect(awards).toContainText("4th Place. Team Leader.");
+  await expect(awards).toContainText("10th ASC Student Supercomputer Challenge (22-23)");
+  await expect(awards).toContainText("2020–2023");
+  await expect(awards).toContainText("SYSU Outstanding Student Scholarship");
+  await expect(page.locator("#teaching + .card")).toContainText("DSAA 5003: Automatic Machine Learning.");
+  await expect(page.locator("#teaching + .card")).toContainText("Fall 2025");
+  await page.setViewportSize({ width: 390, height: 844 });
+  expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1)).toBe(true);
+});
+
 test("blog archives and the old notes address reach the preserved article", async ({ page }) => {
   await page.goto("/notes/");
   await expect(page).toHaveURL(/\/blog\/$/);
@@ -66,7 +89,7 @@ test("navigation, theme, and publication controls work", async ({ page }) => {
   await page.locator("a.bibtex").first().click();
   await expect(page.locator("div.bibtex").first()).toBeVisible();
   await page.goto("/cv/");
-  await expect(page.getByText("Sun Yat-sen University", { exact: false })).toBeVisible();
+  await expect(page.locator("#education + .card")).toContainText("Sun Yat-sen University");
   await expect(page.getByText("DSAA 2042: Computer Architecture and Systems", { exact: false })).toBeVisible();
 });
 

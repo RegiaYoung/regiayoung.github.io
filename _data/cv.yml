@@ -2,6 +2,7 @@ cv:
   name: Ruijia Yang
   label: PhD student
   email: ryang379@connect.hkust-gz.edu.cn
+  website: https://regia.me
   location: Guangzhou, China
   social_networks:
     - network: GitHub
@@ -11,45 +12,50 @@ cv:
       - institution: Hong Kong University of Science and Technology (Guangzhou)
         area: Data Science and Analytics
         studyType: PhD
-        start_date: "2024"
+        start_date: "2024-09"
         end_date: present
         highlights:
           - "Advisor: Prof. Zeyi Wen"
       - institution: Sun Yat-sen University
-        studyType: Undergraduate studies
-    Research interests:
-      - bullet: Memory-efficient LLM training, heterogeneous CPU/GPU/NVMe execution, and distributed fine-tuning.
-    Publications:
-      - title: "SlideDP: Scaling Host-Resident LLM Fine-Tuning Across Multiple GPUs"
-        authors:
-          - Ruijia Yang
-          - Shiyuan Lin
-          - Yulong Ao
-          - Zhiyu Li
-          - Yingli Zhao
-          - Xianduo Li
-          - Yonghua Lin
-          - Zeyi Wen
-        publisher: Preprint
-        releaseDate: "2026"
-        url: https://arxiv.org/abs/2609.34162
-      - title: An Efficient Heterogeneous Co-Design for Fine-Tuning on a Single GPU
-        authors:
-          - Ruijia Yang
-          - Zeyi Wen
-        publisher: DAC 2026
-        releaseDate: "2026"
-        url: https://arxiv.org/abs/2603.16428
-      - title: Efficient Mask Learning for Language Model Fine-Tuning
-        authors:
-          - Minping Chen
-          - Ruijia Yang
-          - Zeyi Wen
-        publisher: CIKM 2025
-        releaseDate: "2025"
-        url: https://doi.org/10.1145/3746252.3761178
+        studyType: Bachelor of Engineering
+        area: Computer Science and Technology, Computer Architecture
+        start_date: "2020"
+        end_date: "2024"
+    Research Interests:
+      - bullet: Memory-efficient LLM training, machine learning systems, heterogeneous CPU/GPU/NVMe execution, and distributed fine-tuning.
+    # Populated from _bibliography/papers.bib by _plugins/cv_publications.rb.
+    Publications: []
+    Research Experience:
+      - bullet: >-
+          **Doctoral Research, HKUST(GZ) (2024–Present).**
+          Advisor: Prof. Zeyi Wen.
+          Research on memory-efficient, full-parameter LLM fine-tuning through heterogeneous CPU/GPU execution and model-state offloading,
+          including SlideFormer for single-GPU fine-tuning and SlideDP for scaling host-resident fine-tuning across multiple GPUs.
+      - bullet: >-
+          **Undergraduate Research, National Supercomputing Center in Guangzhou (2021–2023).**
+          Supervisor: Zhiguang Chen.
+          Studied key-value storage and distributed databases, focusing on workload-specific optimization of LevelDB.
+    Honors and Awards:
+      - title: ASC 2026 Student Supercomputer Challenge
+        date: "2026"
+        summary: "**First Prize.** Advisor to the HKUST(GZ) team."
+      - title: ISC 2023 Student Cluster Competition
+        date: "2023"
+        summary: "**4th Place.** Team Leader."
+      - title: 10th ASC Student Supercomputer Challenge (22-23)
+        date: "2023"
+        summary: "**First Prize and Application Innovation Award.**"
+      # En dashes preserve ranges in the native renderer, which splits ISO dates on '-'.
+      - title: Tencent Scholarship
+        date: "2022–2023"
+        summary: "**First Prize.** Sun Yat-sen University."
+      - title: SYSU Outstanding Student Scholarship
+        date: "2020–2023"
+        summary: "**Second Prizes.**"
     Teaching:
-      - label: "DSAA 2042: Computer Architecture and Systems"
-        details: Teaching Assistant, HKUST(GZ), Summer 2026.
-      - label: Automated Machine Learning
-        details: Teaching Assistant, HKUST(GZ).
+      - bullet: >-
+          **DSAA 2042: Computer Architecture and Systems.**
+          Graduate Teaching Assistant, HKUST(GZ), Summer 2026.
+      - bullet: >-
+          **DSAA 5003: Automatic Machine Learning.**
+          Graduate Teaching Assistant, HKUST(GZ), Fall 2025.
