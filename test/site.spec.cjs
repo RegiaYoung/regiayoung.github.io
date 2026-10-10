@@ -2,28 +2,28 @@ const { test, expect } = require("@playwright/test");
 
 test("homepage exposes native posts, contact links, and the preserved feed", async ({ page, request }) => {
   await page.goto("/");
-  await expect(page.locator(".about > article > h2")).toHaveText(["selected publications", "news", "latest posts"]);
-  await expect(page.getByRole("heading", { name: "latest posts" })).toBeVisible();
+  await expect(page.locator(".about > article > h2")).toHaveText(["Selected publications", "What's new", "Latest posts"]);
+  await expect(page.getByRole("heading", { name: "Latest posts" })).toBeVisible();
   await expect(page.locator(".clearfix a[href='mailto:ryang379@connect.hkust-gz.edu.cn']")).toBeVisible();
   await expect(page.locator(".clearfix a[href='https://github.com/RegiaYoung']")).toBeVisible();
-  const rss = page.locator(".social a[title='RSS']");
+  const rss = page.locator(".social a[title='Subscribe to the blog via RSS']");
   await expect(rss).toHaveAttribute("href", "/index.xml");
   const feed = await request.get(await rss.getAttribute("href"));
   expect(feed.ok()).toBe(true);
   expect(await feed.text()).toContain("http://www.w3.org/2005/Atom");
 });
 
-test("Repo leads with repositories and keeps direct links when stats cards fail", async ({ page }) => {
+test("Repo leads with the native profile and keeps direct links when stats cards fail", async ({ page }) => {
   await page.route("https://github-stats-extended.vercel.app/**", (route) => route.abort());
   await page.goto("/repo/");
-  await expect(page.locator("article h2")).toHaveText(["GitHub Repositories", "GitHub profile"]);
+  await expect(page.locator("article h2")).toHaveText(["GitHub profile", "GitHub Repositories"]);
   const profileCards = page.locator(".repo img[alt='RegiaYoung']");
   await expect(profileCards).toHaveCount(2);
   const themes = [];
   for (const src of await profileCards.evaluateAll((images) => images.map((image) => image.src))) {
     const params = new URL(src).searchParams;
     expect(params.get("username")).toBe("RegiaYoung");
-    expect(params.get("custom_title")).toBe("Ruijia Yang's GitHub Stats");
+    expect(params.has("custom_title")).toBe(false);
     themes.push(params.get("theme"));
   }
   expect(themes).toEqual(["default", "dark"]);
@@ -31,6 +31,50 @@ test("Repo leads with repositories and keeps direct links when stats cards fail"
   for (const name of ["SlideFormer", "SlideDP"]) {
     await expect(page.getByRole("link", { name, exact: true })).toHaveAttribute("href", `https://github.com/RegiaYoung/${name}`);
     await expect(page.getByRole("link", { name, exact: true })).toBeVisible();
+  }
+});
+
+test("venue text stays legible and native CV lists stay aligned in both themes", async ({ page }) => {
+  await page.setViewportSize({ width: 1280, height: 900 });
+  await page.goto("/publications/");
+  for (const theme of ["light", "dark"]) {
+    await page.evaluate((value) => localStorage.setItem("theme", value), theme);
+    await page.goto("/publications/");
+    const contrast = await page.locator(".publications .abbr abbr").evaluateAll((badges) => {
+      const luminance = (color) => {
+        const rgb = color
+          .match(/[\d.]+/g)
+          .slice(0, 3)
+          .map(Number);
+        const linear = rgb.map((value) => {
+          const channel = value / 255;
+          return channel <= 0.04045 ? channel / 12.92 : ((channel + 0.055) / 1.055) ** 2.4;
+        });
+        return linear[0] * 0.2126 + linear[1] * 0.7152 + linear[2] * 0.0722;
+      };
+      return badges.map((badge) => {
+        const foreground = luminance(getComputedStyle(badge.firstElementChild || badge).color);
+        const background = luminance(getComputedStyle(badge).backgroundColor);
+        return (Math.max(foreground, background) + 0.05) / (Math.min(foreground, background) + 0.05);
+      });
+    });
+    expect(contrast).toHaveLength(3);
+    for (const ratio of contrast) expect(ratio).toBeGreaterThanOrEqual(4.5);
+
+    await page.goto("/cv/");
+    const entries = page.locator(".cv .list-group > .list-group-item");
+    expect(await entries.count()).toBeGreaterThan(0);
+    expect(await entries.evaluateAll((items) => items.every((item) => getComputedStyle(item).display !== "list-item"))).toBe(true);
+    const education = page.locator("#education + .card .list-group-item").first();
+    const date = await education.locator(".badge").boundingBox();
+    const title = await education.locator(".title").boundingBox();
+    expect(Math.abs(date.y + date.height / 2 - (title.y + title.height / 2))).toBeLessThan(12);
+    const advisor = education.locator(".items > li").first();
+    await expect(advisor).toContainText("Advisor: Prof. Zeyi Wen");
+    expect(await advisor.evaluate((item) => getComputedStyle(item).listStyleType)).not.toBe("none");
+    await page.setViewportSize({ width: 390, height: 844 });
+    expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1)).toBe(true);
+    await page.setViewportSize({ width: 1280, height: 900 });
   }
 });
 

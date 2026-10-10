@@ -3,6 +3,7 @@
 from html.parser import HTMLParser
 from pathlib import Path
 from urllib.parse import unquote, urljoin, urlsplit
+from xml.etree import ElementTree
 
 
 class Page(HTMLParser):
@@ -57,6 +58,15 @@ for route in ["index.html", "publications/index.html", "repo/index.html", "blog/
 assert (root / "CNAME").read_text().strip() == "regia.me"
 assert "arclight.top" not in (root / "sitemap.xml").read_text()
 assert (root / "publications/index.html").read_text().count('class="title"') == 3, "Expected three publications"
+feed = ElementTree.parse(root / "index.xml").getroot()
+atom = {"a": "http://www.w3.org/2005/Atom"}
+assert feed.tag == f"{{{atom['a']}}}feed", "Expected a valid Atom feed"
+assert feed.findtext("a:title", namespaces=atom) == "Ruijia Yang", "Feed title must identify the site"
+assert feed.findtext("a:author/a:name", namespaces=atom) == "Ruijia Yang", "Feed author is missing"
+assert feed.find("a:link[@rel='self']", atom).get("href") == "https://regia.me/index.xml"
+entries = feed.findall("a:entry", atom)
+assert entries, "Feed should include the preserved blog article"
+assert all(entry.findtext("a:author/a:name", namespaces=atom) for entry in entries), "Feed entry author is missing"
 if errors:
     raise SystemExit("\n".join(errors))
-print(f"Checked {len(pages)} pages: internal links, anchors, assets and regia.me metadata passed.")
+print(f"Checked {len(pages)} pages: internal links, anchors, assets, regia.me metadata and Atom feed passed.")

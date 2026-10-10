@@ -1,7 +1,5 @@
 github_users:
   - RegiaYoung
-github_user_titles:
-  RegiaYoung: "Ruijia Yang's GitHub Stats"
 repo_description_lines_max: 3
 github_repos:
   - RegiaYoung/SlideFormer

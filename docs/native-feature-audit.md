@@ -29,17 +29,27 @@ The CV update on 2026-10-10 adds a site-owned data adapter, `_plugins/cv_publica
 
 ## Intentional presentation overrides (2026-10-10)
 
-The user approved consistent name/title weights, selected publications before news/latest posts, a smaller Blog header and social icons, larger paper buttons, clearer publication years, a more compact CV, and repository cards before profile statistics. All feature gates and native components remain in place.
+The initial presentation review added consistent name/title weights, selected publications before news/latest posts, a smaller Blog header and social icons, larger paper buttons, and clearer publication years. Later user feedback on the same day supersedes the compact CV and repository-first choices: CV section/contact sizing is restored, and the native GitHub profile again comes first. All feature gates and native components remain in place.
 
-| Local file                              | Scope                                                                       | Preserved upstream behavior                                                                           |
-| --------------------------------------- | --------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------- |
-| `_layouts/about.liquid`                 | Reorder existing sections; remove first-name-only bold; add a styling scope | Profile, news, latest posts, selected papers, social links, newsletter, and their conditions/includes |
-| `_includes/repository/repo_user.liquid` | Optional URL-encoded `custom_title`, supplied by `github_user_titles`       | Username, service URL, locale selection, light/dark cards, GitHub link, and image failure handling    |
-| `assets/css/main.scss`                  | Append `@use "regia"`                                                       | Every upstream Sass module and the configured content width                                           |
+| Local file              | Scope                                                              | Preserved upstream behavior                                                                           |
+| ----------------------- | ------------------------------------------------------------------ | ----------------------------------------------------------------------------------------------------- |
+| `_layouts/about.liquid` | Reorder existing sections; allow a news title; add a styling scope | Profile, news, latest posts, selected papers, social links, newsletter, and their conditions/includes |
+| `assets/css/main.scss`  | Append `@use "regia"`                                              | Every upstream Sass module and the configured content width                                           |
 
 The site-owned `_sass/_regia.scss` scopes the visual changes to native components; it does not replace a gem partial. Publication self-author matching still uses native Scholar configuration, with the same semibold emphasis as CV. CV content shortens repeated research descriptions while retaining the advisor, roles, dates, degree, awards, and teaching records. The native CV renderer, TOC, and shared bibliography adapter are unchanged. No runtime JavaScript override is added.
 
 `.al-folio-overrides.yml` records the reviewed upstream baselines. After updating the owning gem, run the official overrides audit and diff, merge any upstream changes into these small copies, then accept each reviewed file. Never accept an override just to silence an audit. The repository browser tests cover homepage section order and readable Repo links when external cards fail, alongside existing search, archives, publication controls, CV/TOC, theme, and gallery checks.
+
+## Follow-up corrections (2026-10-10)
+
+- **Typography:** use Open Sans 400, matching the reference homepage's declared body family, rather than the native Roboto 300. Keep the Google Fonts configuration and Sass stack aligned, and preserve icon/monospace fonts and system fallbacks.
+- **About:** label news “What's new” via front matter; keep the existing news route/include. Clarify the verified undergraduate degree/year and link the two public systems from the research paragraph.
+- **Feed:** `/index.xml` returns valid Atom XML, not a broken page. Its site title was `blank` and the entry author was empty. A real `title` and `author` now populate the native feed; no route or feed format changes. The social link explicitly says it subscribes to the blog.
+- **Venue badges:** the native abbreviation can contain a `div` that receives the global black text color in light mode. Set both the badge and its text children to white, and test the rendered text contrast against each venue background in both themes.
+- **Repo:** remove the custom-title include override, data, and manifest entry. Restore the earlier profile-first page and native nickname lookup; the user confirmed “Okabe” is correct. Repository cards, trophies gate, and direct links remain.
+- **CV:** remove compact heading/contact overrides. Keep the native width, grid, sidebar, and section templates. The current Tailwind runtime lacks the native CV's list-group reset, so scope block-entry/list-reset styles to `.cv`; preserve nested highlight lists. This fixes the detached dots without replacing the renderer. Keep the previously verified CV facts and shared publications.
+
+Visual regression checks cover the venue label's actual child text (not just its wrapper), CV row alignment and nested lists, and both desktop/mobile themes. Do not treat “no horizontal overflow” alone as proof of a correct layout.
 
 ## Deliberate exclusions and setup still required
 

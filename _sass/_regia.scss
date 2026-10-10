@@ -1,6 +1,25 @@
 // Keep presentation changes scoped to the site's native components.
 // Theme-owned entry points are recorded in .al-folio-overrides.yml.
 
+body {
+  font-family:
+    "Open Sans",
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    Arial,
+    "PingFang SC",
+    "Microsoft YaHei",
+    sans-serif;
+  font-weight: 400;
+  line-height: 1.6;
+}
+
+// Native CV cells explicitly request light text; use the same readable body weight.
+.font-weight-light {
+  font-weight: 400 !important;
+}
+
 .post-header .post-title,
 .header-bar h1 {
   font-weight: 500;
@@ -53,6 +72,13 @@
   }
 
   ol.bibliography li {
+    // Native venue labels contain a div that otherwise gets the global text color.
+    .abbr abbr,
+    .abbr abbr > div,
+    .abbr abbr > a {
+      color: #fff !important;
+    }
+
     .title {
       font-weight: 600;
     }
@@ -101,29 +127,23 @@
 }
 
 .cv {
-  .card-title {
-    font-size: 1.5rem;
-    line-height: 1.3;
+  // The Tailwind runtime does not reset these native Bootstrap-style list groups.
+  // Outer entries are blocks; nested highlights keep their normal list markers.
+  .list-group {
+    display: flex;
+    flex-direction: column;
+    padding-left: 0;
+    margin-bottom: 0;
+    list-style: none;
   }
 
-  > .card:first-child {
-    .card-title {
-      font-size: 1.25rem;
-      margin-bottom: 0.5rem;
-    }
+  .list-group-item {
+    display: block;
+    padding: 0.75rem 1.25rem;
+  }
 
-    .table-cv {
-      margin-bottom: 0;
-      font-size: 0.95rem;
-
-      td:first-child {
-        width: 30%;
-      }
-
-      td {
-        overflow-wrap: anywhere;
-      }
-    }
+  > .card:first-child .table-cv td {
+    overflow-wrap: anywhere;
   }
 
   strong,
