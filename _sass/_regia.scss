@@ -31,6 +31,53 @@ body {
   font-weight: 500 !important;
 }
 
+// Style the native search trigger; al_search still owns its Mac shortcut and modal.
+#search-toggle {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  margin-inline: 0.35rem;
+  border-radius: 999px;
+
+  .nav-link {
+    display: inline-flex;
+    flex-direction: row-reverse;
+    align-items: center;
+    gap: 0.5rem;
+    min-height: 32px;
+    padding: 0.25rem 0.75rem;
+    border: 1px solid var(--global-divider-color);
+    border-radius: 999px;
+    background-color: color-mix(in srgb, var(--global-text-color) 4%, var(--global-bg-color));
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+    font-size: 0.75rem;
+    font-weight: 500;
+    line-height: 1;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    white-space: nowrap;
+
+    i {
+      font-size: 0.85rem;
+    }
+  }
+
+  &:hover .nav-link,
+  &:focus-visible .nav-link {
+    border-color: var(--global-theme-color);
+    color: var(--global-theme-color);
+  }
+
+  &:focus-visible {
+    outline: 0;
+
+    .nav-link {
+      outline: 2px solid var(--global-theme-color);
+      outline-offset: 2px;
+    }
+  }
+}
+
 .about > article > h2 {
   margin-top: 2rem;
   font-size: 1.65rem;
