@@ -21,6 +21,14 @@ The original 2021 BIOS article keeps its `/post/教程-硬刷biosx370主板成�
 
 No photo, Google Scholar ID, or downloadable CV PDF is configured. Add these only when available. The CV page currently renders verified information from YAML.
 
+### CV and shared publications
+
+Edit education, research experience, honors, and teaching in `_data/cv.yml`. Keep its `Publications: []` slot: `_plugins/cv_publications.rb` fills it in memory at every Jekyll build from `_bibliography/papers.bib`, ordered by descending year and month. Update paper metadata and PDF/code/arXiv/DOI links only in the bibliography; do not maintain a second publication list in the CV YAML.
+
+The adapter uses the existing BibTeX dependency and the native CV renderer, with no theme overrides. Because the pinned renderer does not display `authors` directly, the adapter also puts the full author list and available links in its supported `summary` field. Local PDF filenames resolve under `assets/pdf/`, as on Publications. This integration builds the website only; any future standalone RenderCV PDF workflow must also consume the shared bibliography.
+
+Award date ranges use an en dash (for example `2020–2023`), since the native award renderer treats an ASCII hyphen as an ISO date separator and otherwise displays only the first year.
+
 ## Blog and repository pages
 
 Blog and Repo reuse al-folio's native starter pages and runtime includes. The blog supports thumbnails, reading time, year/tag/category archives, pagination (five posts per page), and optional featured posts (`featured: true`). Only existing tags and categories are shown; no demo posts are included. New posts belong in `_posts/YYYY-MM-DD-slug.md` with a `layout: post`, title, description, tags and categories. A `thumbnail` is optional. The old `/notes/` URL redirects to `/blog/`.

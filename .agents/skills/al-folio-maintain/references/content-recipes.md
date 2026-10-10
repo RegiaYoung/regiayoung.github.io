@@ -97,6 +97,8 @@ repo_description_lines_max: 3
 
 在当前锁定版本里，自定义通用条目可用 `bullet`，或 `label` / `details`；不能只写任意字符串后把空白网页当成成功。比较完整渲染结果，尤其是 Education、Publications、Teaching。
 
+本站 CV 的 `Publications: []` 是保留顺序的入口，由 `_plugins/cv_publications.rb` 在构建时读取 `_bibliography/papers.bib` 并填充。只维护一份 BibTeX；不要把手写论文列表加回 CV YAML。当前原生 publications renderer 不直接展示 `authors`，适配器通过 `summary` 保留完整作者和 PDF/Code/arXiv/DOI 链接。检查 CV 与 Publications 的论文标题、排序、作者和链接一致。奖项年份范围用 en dash（如 `2020–2023`），避免原生日期拆分把范围截成首年。
+
 只有实际 PDF 存在且内容已核验，才配置 `cv_pdf`。自动生成 PDF 是另一个可选 workflow，需要单独配置和验证，不由 `layout: cv` 自动完成。
 
 ## 可选集成
