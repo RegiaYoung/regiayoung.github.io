@@ -1,4 +1,7 @@
-title: blank
+title: Ruijia Yang
+author:
+  name: Ruijia Yang
+  uri: https://regia.me
 first_name: Ruijia
 middle_name: ""
 last_name: Yang
@@ -355,7 +358,7 @@ third_party_libraries:
     version: 5.5.0
   google_fonts:
     url:
-      fonts: https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:100,300,400,500,700|Material+Icons&display=swap
+      fonts: https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700&family=Roboto+Slab:wght@100;300;400;500;700&family=Material+Icons&display=swap
   highlightjs:
     integrity:
       css:
