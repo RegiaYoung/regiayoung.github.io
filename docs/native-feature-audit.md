@@ -51,6 +51,12 @@ The site-owned `_sass/_regia.scss` scopes the visual changes to native component
 
 Visual regression checks cover the venue label's actual child text (not just its wrapper), CV row alignment and nested lists, and both desktop/mobile themes. Do not treat “no horizontal overflow” alone as proof of a correct layout.
 
+## About and search refinement (2026-10-11)
+
+The About introduction explicitly names Computer Science in the B.Eng. sentence and describes SlideFormer/SlideDP as publicly released work. Keep the compact biography and research paragraphs; do not infer or disclose unreleased projects.
+
+The native search trigger uses a compact pill with a smaller monospace shortcut and leading search icon, styled only in `_sass/_regia.scss`. Keep `#search-toggle .nav-link` intact: the installed `al_search` plugin rewrites its contents to show ⌘ K on Mac. The original button label, click handler, keyboard shortcuts, mobile menu collapse, and modal remain plugin-owned. Verify both light/dark contrast and desktop/mobile interaction when changing this styling; no header or JavaScript override is needed.
+
 ## Deliberate exclusions and setup still required
 
 | Feature                                                | Current state and reason                                                                                                                | To use it                                                                                                                             |
