@@ -22,17 +22,16 @@ cv:
         start_date: "2020"
         end_date: "2024"
     Research Interests:
-      - bullet: Memory-efficient LLM training, machine learning systems, heterogeneous CPU/GPU/NVMe execution, and distributed fine-tuning.
+      - bullet: Machine learning systems; memory-efficient LLM training; heterogeneous and distributed computing.
     # Populated from _bibliography/papers.bib by _plugins/cv_publications.rb.
     Publications: []
     Research Experience:
       - bullet: >-
-          **Doctoral Research, HKUST(GZ) (2024–Present).**
-          Advisor: Prof. Zeyi Wen.
-          Research on memory-efficient, full-parameter LLM fine-tuning through heterogeneous CPU/GPU execution and model-state offloading,
-          including SlideFormer for single-GPU fine-tuning and SlideDP for scaling host-resident fine-tuning across multiple GPUs.
+          **Doctoral Research.** HKUST(GZ), 2024–Present.
+          Developed SlideFormer for single-GPU full-parameter fine-tuning and SlideDP for multi-GPU scaling
+          through heterogeneous execution and model-state offloading.
       - bullet: >-
-          **Undergraduate Research, National Supercomputing Center in Guangzhou (2021–2023).**
+          **Undergraduate Research.** National Supercomputing Center in Guangzhou, 2021–2023.
           Supervisor: Zhiguang Chen.
           Studied key-value storage and distributed databases, focusing on workload-specific optimization of LevelDB.
     Honors and Awards:

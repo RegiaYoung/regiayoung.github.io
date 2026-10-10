@@ -25,7 +25,7 @@ No photo, Google Scholar ID, or downloadable CV PDF is configured. Add these onl
 
 Edit education, research experience, honors, and teaching in `_data/cv.yml`. Keep its `Publications: []` slot: `_plugins/cv_publications.rb` fills it in memory at every Jekyll build from `_bibliography/papers.bib`, ordered by descending year and month. Update paper metadata and PDF/code/arXiv/DOI links only in the bibliography; do not maintain a second publication list in the CV YAML.
 
-The adapter uses the existing BibTeX dependency and the native CV renderer, with no theme overrides. Because the pinned renderer does not display `authors` directly, the adapter also puts the full author list and available links in its supported `summary` field. Local PDF filenames resolve under `assets/pdf/`, as on Publications. This integration builds the website only; any future standalone RenderCV PDF workflow must also consume the shared bibliography.
+The adapter uses the existing BibTeX dependency and the native CV renderer, with no CV template override. Because the pinned renderer does not display `authors` directly, the adapter also puts the full author list and available links in its supported `summary` field. Local PDF filenames resolve under `assets/pdf/`, as on Publications. This integration builds the website only; any future standalone RenderCV PDF workflow must also consume the shared bibliography.
 
 Award date ranges use an en dash (for example `2020–2023`), since the native award renderer treats an ASCII hyphen as an ISO date separator and otherwise displays only the first year.
 
@@ -81,7 +81,11 @@ The [native feature audit](docs/native-feature-audit.md) records restored featur
 
 Agents should use the repository's [al-folio maintenance skill](.agents/skills/al-folio-maintain/SKILL.md). It covers content updates, official documentation, dependency upgrades, and feature preservation. CI runs its read-only native feature check; update the policy only when an intentional site change requires it.
 
-Starter snapshot: `alshedivat/al-folio@d83066c21e6cdb9c0846e548a499064abe23e0ef`. Runtime gems and transitive dependencies are pinned in `Gemfile` / `Gemfile.lock`. There are no local layout, include, Sass, or runtime JavaScript overrides.
+Starter snapshot: `alshedivat/al-folio@d83066c21e6cdb9c0846e548a499064abe23e0ef`. Runtime gems and transitive dependencies are pinned in `Gemfile` / `Gemfile.lock`.
+
+Presentation rules live in `_sass/_regia.scss`. Three small, intentional theme overrides retain all upstream functionality: `assets/css/main.scss` adds that Sass module after the native imports; `_layouts/about.liquid` puts selected papers before news/latest posts and uses a uniform name heading; `_includes/repository/repo_user.liquid` accepts an optional card title from `github_user_titles` in `_data/repositories.yml`. Repo shows repository cards and code availability before profile statistics. Blog and CV keep their native renderers.
+
+These overrides are acknowledged in `.al-folio-overrides.yml`. On every theme upgrade, run `bundle exec al-folio upgrade overrides audit`, inspect `overrides diff PATH` for each affected file, and reconcile upstream changes before `overrides accept PATH`. Do not accept unexplained drift or replace the theme's full Sass module list with the site stylesheet. See the feature audit for the retained components and the maintenance skill for the complete workflow.
 
 Update gem pins and the lockfile deliberately, run the upgrade audit, then rebuild and check the site. Keep plugin activation in `_config.yml` aligned with `Gemfile`. See the [upstream maintenance guidance](https://github.com/alshedivat/al-folio/blob/main/docs/INSTALL.md#maintaining-dependencies).
 

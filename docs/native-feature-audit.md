@@ -23,9 +23,23 @@ The BIOS article keeps its historical `/post/…/` permalink and all original im
 
 The installed native plugins still provide syntax highlighting/code copy, tabs (`tabs: true`), Mermaid/Plotly/ECharts/Chart.js, TikZ/pseudocode, galleries/lightboxes/sliders, video/audio embeds, article citations/references, and external posts. They are not all loaded on every page. Use the upstream documented front matter and data fields when adding content.
 
-No local layout, include, CSS, or JavaScript overrides have been introduced. Blog and Repo retain the upstream starter page structures, with personal content and navigation changes.
+Blog and Repo retain the upstream starter page structures and native components, with personal content, navigation, and section ordering changes.
 
 The CV update on 2026-10-10 adds a site-owned data adapter, `_plugins/cv_publications.rb`, rather than a template override. It populates the native CV publication fields from the same `papers.bib` used by Publications at each build, including authors via the supported `summary` field and existing paper/code links. Education, honors, and other CV sections still use the native renderer and sidebar. Scholarship date ranges use en dashes to preserve both endpoints in its date badges.
+
+## Intentional presentation overrides (2026-10-10)
+
+The user approved consistent name/title weights, selected publications before news/latest posts, a smaller Blog header and social icons, larger paper buttons, clearer publication years, a more compact CV, and repository cards before profile statistics. All feature gates and native components remain in place.
+
+| Local file                              | Scope                                                                       | Preserved upstream behavior                                                                           |
+| --------------------------------------- | --------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------- |
+| `_layouts/about.liquid`                 | Reorder existing sections; remove first-name-only bold; add a styling scope | Profile, news, latest posts, selected papers, social links, newsletter, and their conditions/includes |
+| `_includes/repository/repo_user.liquid` | Optional URL-encoded `custom_title`, supplied by `github_user_titles`       | Username, service URL, locale selection, light/dark cards, GitHub link, and image failure handling    |
+| `assets/css/main.scss`                  | Append `@use "regia"`                                                       | Every upstream Sass module and the configured content width                                           |
+
+The site-owned `_sass/_regia.scss` scopes the visual changes to native components; it does not replace a gem partial. Publication self-author matching still uses native Scholar configuration, with the same semibold emphasis as CV. CV content shortens repeated research descriptions while retaining the advisor, roles, dates, degree, awards, and teaching records. The native CV renderer, TOC, and shared bibliography adapter are unchanged. No runtime JavaScript override is added.
+
+`.al-folio-overrides.yml` records the reviewed upstream baselines. After updating the owning gem, run the official overrides audit and diff, merge any upstream changes into these small copies, then accept each reviewed file. Never accept an override just to silence an audit. The repository browser tests cover homepage section order and readable Repo links when external cards fail, alongside existing search, archives, publication controls, CV/TOC, theme, and gallery checks.
 
 ## Deliberate exclusions and setup still required
 
