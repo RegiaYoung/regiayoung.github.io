@@ -2,6 +2,7 @@ const { test, expect } = require("@playwright/test");
 
 test("homepage exposes native posts, contact links, and the preserved feed", async ({ page, request }) => {
   await page.goto("/");
+  await expect(page.locator(".about > article > h2")).toHaveText(["selected publications", "news", "latest posts"]);
   await expect(page.getByRole("heading", { name: "latest posts" })).toBeVisible();
   await expect(page.locator(".clearfix a[href='mailto:ryang379@connect.hkust-gz.edu.cn']")).toBeVisible();
   await expect(page.locator(".clearfix a[href='https://github.com/RegiaYoung']")).toBeVisible();
@@ -10,6 +11,27 @@ test("homepage exposes native posts, contact links, and the preserved feed", asy
   const feed = await request.get(await rss.getAttribute("href"));
   expect(feed.ok()).toBe(true);
   expect(await feed.text()).toContain("http://www.w3.org/2005/Atom");
+});
+
+test("Repo leads with repositories and keeps direct links when stats cards fail", async ({ page }) => {
+  await page.route("https://github-stats-extended.vercel.app/**", (route) => route.abort());
+  await page.goto("/repo/");
+  await expect(page.locator("article h2")).toHaveText(["GitHub Repositories", "GitHub profile"]);
+  const profileCards = page.locator(".repo img[alt='RegiaYoung']");
+  await expect(profileCards).toHaveCount(2);
+  const themes = [];
+  for (const src of await profileCards.evaluateAll((images) => images.map((image) => image.src))) {
+    const params = new URL(src).searchParams;
+    expect(params.get("username")).toBe("RegiaYoung");
+    expect(params.get("custom_title")).toBe("Ruijia Yang's GitHub Stats");
+    themes.push(params.get("theme"));
+  }
+  expect(themes).toEqual(["default", "dark"]);
+  await expect(page.getByRole("link", { name: "View all repositories on GitHub" })).toBeVisible();
+  for (const name of ["SlideFormer", "SlideDP"]) {
+    await expect(page.getByRole("link", { name, exact: true })).toHaveAttribute("href", `https://github.com/RegiaYoung/${name}`);
+    await expect(page.getByRole("link", { name, exact: true })).toBeVisible();
+  }
 });
 
 test("publication filtering and native CV section navigation work", async ({ page }) => {

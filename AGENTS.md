@@ -1,6 +1,6 @@
 # Personal website
 
-This site uses al-folio v1.x, with pinned runtime gems. Keep changes in content, data, and configuration where possible. There are no local theme overrides.
+This site uses al-folio v1.x, with pinned runtime gems. Keep changes in content, data, and configuration where possible. Three intentional theme overrides are tracked in `.al-folio-overrides.yml`; their scope and upgrade procedure are documented in `docs/native-feature-audit.md`. Site presentation rules live in `_sass/_regia.scss`.
 
 Before content, configuration, layout, dependency, or deployment work, read `.agents/skills/al-folio-maintain/SKILL.md`. It provides the official documentation route, content recipes, upgrade workflow, and site-specific feature policy. Read `docs/native-feature-audit.md` before disabling or replacing native functionality. User instructions take precedence; document intentional changes instead of silently weakening the checks.
 
