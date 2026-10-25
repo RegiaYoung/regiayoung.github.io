@@ -10,6 +10,7 @@ repositories:
     url: https://github.com/RegiaYoung/SlideFormer
     description: Full-parameter LLM fine-tuning on a single GPU through layer-sliding
       execution and CPU/GPU/NVMe pipelining.
+    result: Fine-tunes 123B+ models on a single RTX 4090; the paper reports 1.40–6.27× higher throughput than evaluated baselines.
     status: Runtime, reproducibility scripts, and documentation available.
     paper: https://arxiv.org/abs/2603.16428
     venue: DAC 2026
@@ -17,6 +18,7 @@ repositories:
     url: https://github.com/RegiaYoung/SlideDP
     description: Scaling host-resident LLM fine-tuning across multiple GPUs with synchronous
       data parallelism.
+    result: Fine-tunes Qwen2.5-72B on four RTX 4090 GPUs; matched-batch experiments report 1.46–2.64× geometric-mean throughput ratios over evaluated baselines.
     status: Reference multi-GPU extension available; the optimized runtime is forthcoming.
     paper: https://arxiv.org/abs/2609.34162
     venue: Preprint, 2026

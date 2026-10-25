@@ -2,7 +2,7 @@
 
 Academic homepage for **https://regia.me**, using [al-folio](https://github.com/alshedivat/al-folio) v1.x and Jekyll.
 
-Navigation: **About / Publications / Repo / Blog / CV**.
+Navigation: **About / Publications / Projects / Blog / CV**.
 
 ## Edit content
 
@@ -19,13 +19,13 @@ Navigation: **About / Publications / Repo / Blog / CV**.
 
 The original 2021 BIOS article keeps its `/post/教程-硬刷biosx370主板成功进化/` permalink and original image paths. Its article text is preserved. The old generated Hugo pages and custom Python builder have been replaced by Jekyll source content; previous versions remain in git history.
 
-No photo, Google Scholar ID, or downloadable CV PDF is configured. Add these only when available. The CV page currently renders verified information from YAML.
+Google Scholar is linked to the verified profile `iPRd0kcAAAAJ`. The downloadable CV is generated from the same YAML and bibliography as the native CV page. No portrait is configured.
 
 ### CV and shared publications
 
 Edit education, research experience, honors, and teaching in `_data/cv.yml`. Keep its `Publications: []` slot: `_plugins/cv_publications.rb` fills it in memory at every Jekyll build from `_bibliography/papers.bib`, ordered by descending year and month. Update paper metadata and PDF/code/arXiv/DOI links only in the bibliography; do not maintain a second publication list in the CV YAML.
 
-The adapter uses the existing BibTeX dependency and the native CV renderer, with no CV template override. Because the pinned renderer does not display `authors` directly, the adapter also puts the full author list and available links in its supported `summary` field. Local PDF filenames resolve under `assets/pdf/`, as on Publications. This integration builds the website only; any future standalone RenderCV PDF workflow must also consume the shared bibliography.
+The adapter uses the existing BibTeX dependency and the native CV renderer, with no CV template override. Because the pinned renderer does not display `authors` directly, the adapter also puts the full author list and available links in its supported `summary` field. Local PDF filenames resolve under `assets/pdf/`, as on Publications. `scripts/export_cv.rb` reuses this adapter to feed `scripts/build_cv_pdf.py`; CI regenerates the PDF before building the site.
 
 Award date ranges use an en dash (for example `2020–2023`), since the native award renderer treats an ASCII hyphen as an ISO date separator and otherwise displays only the first year.
 
@@ -42,6 +42,8 @@ Use Ruby 3.3.5, Bundler 4.0.6, Node.js 22, and Python 3.
 ```sh
 bundle install
 npm ci
+python3 -m pip install -r scripts/requirements-pdf.txt
+bundle exec ruby scripts/export_cv.rb | python3 scripts/build_cv_pdf.py
 bundle exec jekyll serve
 ```
 
@@ -83,7 +85,7 @@ Agents should use the repository's [al-folio maintenance skill](.agents/skills/a
 
 Starter snapshot: `alshedivat/al-folio@d83066c21e6cdb9c0846e548a499064abe23e0ef`. Runtime gems and transitive dependencies are pinned in `Gemfile` / `Gemfile.lock`.
 
-Presentation rules live in `_sass/_regia.scss`. Two small, intentional theme overrides retain upstream functionality: `assets/css/main.scss` adds that Sass module after the native imports; `_layouts/about.liquid` puts selected papers before updates/latest posts and supports `announcements.title` (currently “What's new”). Repo uses the unmodified native includes, with the profile first and the GitHub nickname supplied by the stats service; “Okabe” is intentional. Blog and CV keep their native renderers.
+Presentation rules live in `_sass/_regia.scss`. Three intentional theme overrides retain upstream functionality: `assets/css/main.scss` adds that Sass module after the native imports; `_layouts/about.liquid` puts selected papers before updates/latest posts and supports `announcements.title` (currently “What's new”). `_includes/metadata.liquid` unifies browser/social titles and adds raster icon links, preserving upstream metadata and schema. Projects uses the unmodified native includes, with the profile before repository cards and the GitHub nickname supplied by the stats service; “Okabe” is intentional. Blog and CV keep their native renderers.
 
 Body text uses Open Sans at regular weight, with system and Chinese font fallbacks. Keep its Google Fonts URL in `_config.yml` aligned with the family used in Sass. Venue badge text and its nested elements stay white against the configured dark venue colors in both themes. CV keeps native section/contact sizing and page width; a scoped list-group reset restores block entries without stray outer bullets, while nested highlights retain their bullets. Check these in the browser after theme upgrades.
 
@@ -94,3 +96,11 @@ These overrides are acknowledged in `.al-folio-overrides.yml`. On every theme up
 Update gem pins and the lockfile deliberately, run the upgrade audit, then rebuild and check the site. Keep plugin activation in `_config.yml` aligned with `Gemfile`. See the [upstream maintenance guidance](https://github.com/alshedivat/al-folio/blob/main/docs/INSTALL.md#maintaining-dependencies).
 
 The al-folio template is used under its MIT license; see `LICENSE`. Article content remains the author's own work.
+
+## Current homepage and assets (2026-10-26)
+
+The homepage hides Latest posts via front matter; Blog and its historical article remain intact. Projects adds sourced research summaries above the native GitHub profile/repository cards. Both `/repo/` and `/repositories/` redirect to `/projects/`.
+
+The browser and share title are `Ruijia Yang | Efficient LLM Systems`, independent of the displayed site name. The original SVG icon remains; PNG/ICO/Apple touch variants and the 1200x630 social image are committed. To regenerate them, install CairoSVG/Pillow and run `python3 scripts/generate_brand_assets.py`; edit `assets/img/social-preview.svg` for the share card. Preview favicons at 16/32px.
+
+For CV changes, run the export/render pipeline before the normal Jekyll build, inspect the PDF, and commit the refreshed PDF alongside its sources. CI regenerates it on every build, preventing a stale deployed download. Keep the PDF content synchronized with the HTML CV rather than editing the binary manually.

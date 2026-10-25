@@ -51,13 +51,13 @@ for path, page in pages.items():
         elif url.fragment and dest in pages and unquote(url.fragment) not in pages[dest].ids:
             errors.append(f"Missing anchor: {path} → {href}")
 
-for route in ["index.html", "publications/index.html", "repo/index.html", "blog/index.html", "notes/index.html", "blog/2021/index.html", "blog/tag/bios/index.html", "blog/category/tutorials/index.html", "cv/index.html", "post/教程-硬刷biosx370主板成功进化/index.html"]:
+for route in ["index.html", "publications/index.html", "repo/index.html", "projects/index.html", "blog/index.html", "notes/index.html", "blog/2021/index.html", "blog/tag/bios/index.html", "blog/category/tutorials/index.html", "cv/index.html", "post/教程-硬刷biosx370主板成功进化/index.html"]:
     if root / route not in pages:
         errors.append(f"Missing page: {route}")
 
 assert (root / "CNAME").read_text().strip() == "regia.me"
 assert "arclight.top" not in (root / "sitemap.xml").read_text()
-assert (root / "publications/index.html").read_text().count('class="title"') == 3, "Expected three publications"
+assert (root / "publications/index.html").read_text().count('class="title"') == 4, "Expected four publications"
 feed = ElementTree.parse(root / "index.xml").getroot()
 atom = {"a": "http://www.w3.org/2005/Atom"}
 assert feed.tag == f"{{{atom['a']}}}feed", "Expected a valid Atom feed"
