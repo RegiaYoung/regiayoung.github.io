@@ -1,11 +1,25 @@
 ---
 layout: page
-permalink: /repo/
-title: Repo
+permalink: /projects/
+title: Projects
 description: Open-source work on efficient LLM training and systems.
 nav: true
 nav_order: 2
 ---
+
+## Research projects
+
+<div class="research-projects">
+{% for project in site.data.repositories.repositories %}
+<section class="research-project">
+  <h3>{{ project.name }}</h3>
+  <p>{{ project.description }}</p>
+  <p class="project-result"><strong>Result.</strong> {{ project.result }}</p>
+  <p class="project-links"><a href="{{ project.paper }}">Paper · {{ project.venue }}</a> <span aria-hidden="true">·</span> <a href="{{ project.url }}">Code</a></p>
+  <p class="project-status">{{ project.status }}</p>
+</section>
+{% endfor %}
+</div>
 
 {% if site.data.repositories.github_users %}
 

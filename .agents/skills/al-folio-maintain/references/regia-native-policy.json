@@ -50,19 +50,35 @@
         "selected_papers": true,
         "social": true,
         "announcements.enabled": true,
-        "latest_posts.enabled": true
+        "latest_posts.enabled": false
       }
     },
     "_pages/publications.md": {
-      "front_matter": { "layout": "page", "title": "Publications", "permalink": "/publications/", "nav": true },
+      "front_matter": {
+        "layout": "page",
+        "title": "Publications",
+        "permalink": "/publications/",
+        "nav": true
+      },
       "native_patterns": ["include\\s+bib_search\\.liquid", "\\{%[-]?\\s*bibliography\\s*[-]?%\\}"]
     },
     "_pages/repo.md": {
-      "front_matter": { "layout": "page", "title": "Repo", "permalink": "/repo/", "nav": true },
+      "front_matter": {
+        "layout": "page",
+        "title": "Projects",
+        "permalink": "/projects/",
+        "nav": true
+      },
       "native_patterns": ["include\\s+repository/repo_user\\.liquid", "include\\s+repository/repo\\.liquid"]
     },
     "_pages/blog.md": {
-      "front_matter": { "layout": "default", "title": "Blog", "permalink": "/blog/", "nav": true, "pagination.enabled": true },
+      "front_matter": {
+        "layout": "default",
+        "title": "Blog",
+        "permalink": "/blog/",
+        "nav": true,
+        "pagination.enabled": true
+      },
       "native_patterns": [
         "header-bar",
         "post-list",
@@ -74,10 +90,22 @@
       ]
     },
     "_pages/cv.md": {
-      "front_matter": { "layout": "cv", "title": "CV", "permalink": "/cv/", "nav": true, "cv_format": "rendercv", "toc.sidebar": "left" }
+      "front_matter": {
+        "layout": "cv",
+        "title": "CV",
+        "permalink": "/cv/",
+        "nav": true,
+        "cv_format": "rendercv",
+        "toc.sidebar": "left"
+      }
     },
     "_posts/2021-09-25-x370-bios.html": {
-      "front_matter": { "layout": "post", "permalink": "/post/教程-硬刷biosx370主板成功进化/", "toc.sidebar": "left", "images.lightbox2": true },
+      "front_matter": {
+        "layout": "post",
+        "permalink": "/post/教程-硬刷biosx370主板成功进化/",
+        "toc.sidebar": "left",
+        "images.lightbox2": true
+      },
       "native_patterns": ["data-lightbox="]
     }
   },
@@ -85,6 +113,7 @@
     "/notes/": "/blog/",
     "/archives/": "/blog/",
     "/post/": "/blog/",
-    "/repositories/": "/repo/"
+    "/repositories/": "/projects/",
+    "/repo/": "/projects/"
   }
 }

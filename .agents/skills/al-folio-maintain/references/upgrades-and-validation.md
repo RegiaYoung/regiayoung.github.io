@@ -45,6 +45,8 @@ npm ci
 npm run lint:prettier
 ruby .agents/skills/al-folio-maintain/scripts/check_native_features.rb --root .
 bundle exec al-folio upgrade audit --no-fail
+python3 -m pip install -r scripts/requirements-pdf.txt
+bundle exec ruby scripts/export_cv.rb | python3 scripts/build_cv_pdf.py
 JEKYLL_ENV=production bundle exec jekyll build
 python3 scripts/check_site.py
 npm run test:site
@@ -62,7 +64,7 @@ npm run test:site
 | Publications     | 筛选与清空、Bib/Abs 按钮、预览图与真实外链                               |
 | Blog / 路由      | 列表、缩略图、标签/分类/年份、搜索、旧 URL、RSS；有足够内容再测分页/置顶 |
 | Repo             | 深浅色 SVG 实际加载、错误图、服务不可用时的直接链接                      |
-| CV / TOC         | 各 section 非空、目录点击、手机换行与横向溢出                            |
+| CV / TOC         | 各 section 非空、目录点击、手机换行、PDF 下载及渲染内容与共享数据一致    |
 | 文章/公式/图库   | 真实公式排版、放大/切图/关闭、目录跳转、阅读进度、图片地址               |
 | CDN/runtime 升级 | 浏览器控制台/SRI/网络加载、桌面手机与深浅色                              |
 | 发布流程         | 现有 workflow 条件、最小权限、PR 不发布而 main 发布的约定                |

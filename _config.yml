@@ -12,7 +12,7 @@ footer_text: Powered by <a href="https://jekyllrb.com/">Jekyll</a> and <a href="
 keywords: Ruijia Yang, 杨锐佳, LLM systems, efficient training, heterogeneous computing, HKUST Guangzhou
 lang: en
 icon: favicon.svg
-apple_touch_icon: null
+apple_touch_icon: apple-touch-icon.png
 url: https://regia.me
 baseurl: ""
 last_updated: false
@@ -62,7 +62,7 @@ bib_search: true
 max_width: 930px
 serve_og_meta: true
 serve_schema_org: true
-og_image: null
+og_image: /assets/img/social-preview.png
 analytics:
   google: null
   cronitor: null

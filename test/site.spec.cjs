@@ -1,9 +1,9 @@
 const { test, expect } = require("@playwright/test");
 
-test("homepage exposes native posts, contact links, and the preserved feed", async ({ page, request }) => {
+test("homepage focuses on research and preserves contact links and the feed", async ({ page, request }) => {
   await page.goto("/");
-  await expect(page.locator(".about > article > h2")).toHaveText(["Selected publications", "What's new", "Latest posts"]);
-  await expect(page.getByRole("heading", { name: "Latest posts" })).toBeVisible();
+  await expect(page.locator(".about > article > h2")).toHaveText(["Selected publications", "What's new"]);
+  await expect(page.getByRole("heading", { name: "Latest posts" })).toHaveCount(0);
   await expect(page.locator(".clearfix a[href='mailto:ryang379@connect.hkust-gz.edu.cn']")).toBeVisible();
   await expect(page.locator(".clearfix a[href='https://github.com/RegiaYoung']")).toBeVisible();
   const rss = page.locator(".social a[title='Subscribe to the blog via RSS']");
@@ -13,10 +13,10 @@ test("homepage exposes native posts, contact links, and the preserved feed", asy
   expect(await feed.text()).toContain("http://www.w3.org/2005/Atom");
 });
 
-test("Repo leads with the native profile and keeps direct links when stats cards fail", async ({ page }) => {
+test("Projects retains the native profile and keeps direct links when stats cards fail", async ({ page }) => {
   await page.route("https://github-stats-extended.vercel.app/**", (route) => route.abort());
-  await page.goto("/repo/");
-  await expect(page.locator("article h2")).toHaveText(["GitHub profile", "GitHub Repositories"]);
+  await page.goto("/projects/");
+  await expect(page.locator("article h2")).toHaveText(["Research projects", "GitHub profile", "GitHub Repositories"]);
   const profileCards = page.locator(".repo img[alt='RegiaYoung']");
   await expect(profileCards).toHaveCount(2);
   const themes = [];
@@ -29,8 +29,8 @@ test("Repo leads with the native profile and keeps direct links when stats cards
   expect(themes).toEqual(["default", "dark"]);
   await expect(page.getByRole("link", { name: "View all repositories on GitHub" })).toBeVisible();
   for (const name of ["SlideFormer", "SlideDP"]) {
-    await expect(page.getByRole("link", { name, exact: true })).toHaveAttribute("href", `https://github.com/RegiaYoung/${name}`);
-    await expect(page.getByRole("link", { name, exact: true })).toBeVisible();
+    await expect(page.getByRole("link", { name, exact: true }).first()).toHaveAttribute("href", `https://github.com/RegiaYoung/${name}`);
+    await expect(page.getByRole("link", { name, exact: true }).first()).toBeVisible();
   }
 });
 
@@ -58,7 +58,7 @@ test("venue text stays legible and native CV lists stay aligned in both themes",
         return (Math.max(foreground, background) + 0.05) / (Math.min(foreground, background) + 0.05);
       });
     });
-    expect(contrast).toHaveLength(3);
+    expect(contrast).toHaveLength(4);
     for (const ratio of contrast) expect(ratio).toBeGreaterThanOrEqual(4.5);
 
     await page.goto("/cv/");
@@ -81,12 +81,12 @@ test("venue text stays legible and native CV lists stay aligned in both themes",
 test("publication filtering and native CV section navigation work", async ({ page }) => {
   await page.goto("/publications/");
   const entries = page.locator(".bibliography > li:visible");
-  await expect(entries).toHaveCount(3);
+  await expect(entries).toHaveCount(4);
   await page.getByPlaceholder("Type to filter").fill("SlideDP");
   await expect(entries).toHaveCount(1);
   await expect(entries).toContainText("SlideDP");
   await page.getByPlaceholder("Type to filter").fill("");
-  await expect(entries).toHaveCount(3);
+  await expect(entries).toHaveCount(4);
   await page.goto("/cv/");
   const teaching = page.locator("#toc-sidebar").getByRole("link", { name: "Teaching", exact: true });
   await expect(teaching).toBeVisible();
@@ -145,7 +145,7 @@ test("navigation, theme, and publication controls work", async ({ page }) => {
   await expect(page.locator("h1")).toContainText("Ruijia");
   const nav = page.locator("#navbarNav a.nav-link");
   await expect(nav).toHaveCount(5);
-  for (const label of ["About", "Publications", "Repo", "Blog", "CV"]) {
+  for (const label of ["About", "Publications", "Projects", "Blog", "CV"]) {
     await expect(page.locator("#navbarNav").getByRole("link", { name: label, exact: false })).toBeVisible();
   }
   const before = await page.locator("html").getAttribute("data-theme-setting");
@@ -183,4 +183,41 @@ test("mobile navigation and archived article remain usable", async ({ page }) =>
   await page.evaluate(() => window.scrollTo(0, document.documentElement.scrollHeight));
   await expect.poll(() => page.locator("#progress").evaluate((element) => element.value)).toBeGreaterThan(0);
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1)).toBe(true);
+});
+
+test("share metadata, icons, PDF download and legacy project URLs are usable", async ({ page, request }) => {
+  await page.goto("/");
+  const title = "Ruijia Yang | Efficient LLM Systems";
+  await expect(page).toHaveTitle(title);
+  await expect(page.locator('meta[property="og:title"]')).toHaveAttribute("content", title);
+  await expect(page.locator('meta[name="twitter:title"]')).toHaveAttribute("content", title);
+  await expect(page.locator('meta[name="twitter:card"]')).toHaveAttribute("content", "summary_large_image");
+  await expect(page.locator('meta[property="og:image"]')).toHaveAttribute("content", "https://regia.me/assets/img/social-preview.png");
+  await expect(page.locator('link[rel="apple-touch-icon"]')).toHaveAttribute("href", /apple-touch-icon\.png/);
+  for (const [path, width, height] of [
+    ["/assets/img/social-preview.png", 1200, 630],
+    ["/assets/img/apple-touch-icon.png", 180, 180],
+    ["/assets/img/favicon-16.png", 16, 16],
+    ["/assets/img/favicon-32.png", 32, 32],
+  ]) {
+    const response = await request.get(path);
+    expect(response.ok()).toBe(true);
+    const bytes = await response.body();
+    expect(bytes.readUInt32BE(16)).toBe(width);
+    expect(bytes.readUInt32BE(20)).toBe(height);
+  }
+  const ico = await request.get("/favicon.ico");
+  expect(ico.ok()).toBe(true);
+  expect((await ico.body()).readUInt16LE(2)).toBe(1);
+  for (const path of ["/repo/", "/repositories/"]) {
+    await page.goto(path);
+    await expect(page).toHaveURL(/\/projects\/$/);
+    await expect(page.locator(".research-project")).toHaveCount(2);
+  }
+  await page.goto("/cv/");
+  const pdfLink = page.getByRole("link", { name: "Download PDF" });
+  await expect(pdfLink).toBeVisible();
+  const pdf = await request.get(await pdfLink.getAttribute("href"));
+  expect(pdf.ok()).toBe(true);
+  expect((await pdf.body()).subarray(0, 5).toString()).toBe("%PDF-");
 });

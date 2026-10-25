@@ -32,6 +32,14 @@ jobs:
       - name: Check native al-folio features
         run: ruby .agents/skills/al-folio-maintain/scripts/check_native_features.rb --root .
       - run: bundle exec al-folio upgrade audit --no-fail
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: scripts/requirements-pdf.txt
+      - run: pip install -r scripts/requirements-pdf.txt
+      - name: Generate CV PDF from shared data
+        run: bundle exec ruby scripts/export_cv.rb | python3 scripts/build_cv_pdf.py
       - name: Build site
         env:
           JEKYLL_ENV: production

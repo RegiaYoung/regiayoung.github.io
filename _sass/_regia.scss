@@ -210,3 +210,48 @@ body {
     min-width: 44px;
   }
 }
+
+.research-projects {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+  margin: 1rem 0 2.5rem;
+}
+.research-project {
+  border: 1px solid var(--global-divider-color);
+  border-radius: 12px;
+  padding: 1.4rem;
+  background: var(--global-card-bg-color);
+}
+.research-project h3 {
+  margin-top: 0;
+  font-size: 1.4rem;
+}
+.research-project .project-status {
+  font-size: 0.85rem;
+  margin-bottom: 0;
+}
+.project-links a {
+  display: inline-block;
+  padding-block: 0.4rem;
+}
+.post-title a[href$="/Ruijia-Yang-CV.pdf"] {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-height: 44px;
+  padding: 0.4rem 0.8rem;
+  border: 1px solid currentColor;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  text-decoration: none;
+}
+.post-title a[href$="/Ruijia-Yang-CV.pdf"]::after {
+  content: "Download PDF";
+}
+@media (max-width: 575.98px) {
+  .research-projects {
+    grid-template-columns: 1fr;
+  }
+}

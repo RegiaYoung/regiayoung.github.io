@@ -8,15 +8,15 @@
 | --------------- | ---------------------------------------------------- | ---------------- |
 | About           | `_pages/about.md`                                    | `/`              |
 | Publications    | `_bibliography/papers.bib`、`_pages/publications.md` | `/publications/` |
-| Repo            | `_data/repositories.yml`、`_pages/repo.md`           | `/repo/`         |
+| Projects        | `_data/repositories.yml`、`_pages/repo.md`           | `/projects/`     |
 | Blog            | `_posts/`、`_pages/blog.md`                          | `/blog/`         |
 | CV              | `_data/cv.yml`、`_pages/cv.md`                       | `/cv/`           |
 | 新闻 / 联系方式 | `_news/`、`_data/socials.yml`                        | 首页及 `/news/`  |
 | Atom feed       | `feed.path`                                          | `/index.xml`     |
 
-导航保持 About / Publications / Repo / Blog / CV；用户已明确用 Repo，不加 Projects。域名 `https://regia.me`，`baseurl: ""`，CNAME 为 `regia.me`。不要恢复 Arclight 品牌或旧域名。
+导航保持 About / Publications / Projects / Blog / CV；2026-10-26 用户决定将 Repo 改为 Projects，增加项目介绍并保留原生仓库卡片。域名 `https://regia.me`，`baseurl: ""`，CNAME 为 `regia.me`。不要恢复 Arclight 品牌或旧域名。
 
-保留 BIOS 文章 `/post/教程-硬刷biosx370主板成功进化/` 和已有图片地址。`/notes/`、`/archives/`、`/post/` 转向 Blog；`/repositories/` 转向 Repo。检查源页面是否产生重复 permalink，尤其不要同时保留旧 Blog 跳转页和新 Blog 页面。
+保留 BIOS 文章 `/post/教程-硬刷biosx370主板成功进化/` 和已有图片地址。`/notes/`、`/archives/`、`/post/` 转向 Blog；`/repo/`、`/repositories/` 转向 `/projects/`。检查源页面是否产生重复 permalink，尤其不要同时保留旧 Blog 跳转页和新 Blog 页面。
 
 ## 个人信息与发布边界
 
@@ -37,7 +37,9 @@
 ## 明确保留的可选状态
 
 - 评论、统计、newsletter、citation badges 等等待用户自己的配置。
-- 头像、CV PDF、论文图等待真实素材。
+- 头像、论文图等待真实素材；CV PDF 从现有 CV YAML 和共享 BibTeX 自动生成，不再等待上传。
+- 首页 `latest_posts.enabled: false` 是用户明确选择；Blog、归档和原生 latest-posts include 保留。
+- 已核实 Google Scholar ID 为 `iPRd0kcAAAAJ`；保持论文与公开版本一致，不推测引用量。
 - 自动 WebP：gem 已安装，转换开关关闭；使用前配置 ImageMagick 及输入目录。
 - Jupyter：gem/plugin 尚未启用；需要同时安装 Ruby/Python 转换依赖并实际测试。
 - JSONResume、额外 collections、masonry、固定 footer 不因“恢复默认”而自动启用。

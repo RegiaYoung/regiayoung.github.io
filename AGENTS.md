@@ -1,10 +1,10 @@
 # Personal website
 
-This site uses al-folio v1.x, with pinned runtime gems. Keep changes in content, data, and configuration where possible. Two intentional theme overrides are tracked in `.al-folio-overrides.yml`; their scope and upgrade procedure are documented in `docs/native-feature-audit.md`. Site presentation rules live in `_sass/_regia.scss`.
+This site uses al-folio v1.x, with pinned runtime gems. Keep changes in content, data, and configuration where possible. Three intentional theme overrides are tracked in `.al-folio-overrides.yml`; their scope and upgrade procedure are documented in `docs/native-feature-audit.md`. Site presentation rules live in `_sass/_regia.scss`.
 
 Before content, configuration, layout, dependency, or deployment work, read `.agents/skills/al-folio-maintain/SKILL.md`. It provides the official documentation route, content recipes, upgrade workflow, and site-specific feature policy. Read `docs/native-feature-audit.md` before disabling or replacing native functionality. User instructions take precedence; document intentional changes instead of silently weakening the checks.
 
-- Navigation: About / Publications / Repo / Blog / CV.
+- Navigation: About / Publications / Projects / Blog / CV.
 - Domain: https://regia.me, with an empty baseurl.
 - Keep the original BIOS article permalink and image paths intact.
 - Do not invent personal details, credentials, dates, photo, Scholar ID, or CV PDF.

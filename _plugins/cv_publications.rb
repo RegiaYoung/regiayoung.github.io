@@ -38,7 +38,7 @@ module Regia
           "authors" => authors,
           "publisher" => venue.to_s,
           "releaseDate" => entry.year.to_s,
-          "url" => links["arXiv"] || links["DOI"] || links["PDF"] || links["Code"],
+          "url" => links["Publisher"] || links["DOI"] || links["arXiv"] || links["PDF"] || links["Code"],
           # The pinned native renderer reads summary, not authors.
           "summary" => ["#{author_text}.", links.map { |label, url| "[#{label}](<#{url}>)" }.join(" · ")].join("<br>")
         }
@@ -58,6 +58,7 @@ module Regia
                          "#{site.baseurl}#{asset}"
                        end
       end
+      links["Publisher"] = entry[:html].to_s if entry[:html]
       links["Code"] = entry[:code].to_s if entry[:code]
       links["arXiv"] = "https://arxiv.org/abs/#{entry[:arxiv]}" if entry[:arxiv]
       links["DOI"] = "https://doi.org/#{entry[:doi]}" if entry[:doi]
