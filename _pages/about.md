@@ -5,7 +5,10 @@ browser_title: Ruijia Yang | Efficient LLM Systems
 social_title: Ruijia Yang | Efficient LLM Systems
 permalink: /
 subtitle: 杨锐佳 · PhD student, HKUST(GZ)
-profile: false
+profile:
+  align: right
+  image: ruijia-home.jpg
+  image_circular: false
 selected_papers: true
 social: true
 announcements:

@@ -86,3 +86,7 @@ Upstream references: [feature inventory](https://github.com/alshedivat/al-folio#
 Sources checked: [Google Scholar](https://scholar.google.com/citations?user=iPRd0kcAAAAJ), [SlideFormer](https://arxiv.org/abs/2603.16428), [ACM DOI](https://dl.acm.org/doi/10.1145/3770743.3804125), [CIKM](https://dl.acm.org/doi/10.1145/3746252.3761178), [SlideDP](https://arxiv.org/abs/2609.34162), [EHR-Bench](https://arxiv.org/abs/2610.16689). ACM's direct page blocked automated retrieval; the existing DOI was retained, Scholar supplied DAC pages, and ACM's indexed CIKM record supplied its pages.
 
 Follow-up homepage selection (2026-10-26): the user requested that EHR-Bench remain in Publications and the shared CV but not appear in homepage selections or news. Set its native `selected` field to false and remove its inline announcement. Also remove the June 30 SlideFormer revision announcement. Keep the What's new section and its other announcements enabled.
+
+## User-supplied portraits (2026-11-01)
+
+The homepage now uses the native profile field with an adjusted travel portrait, right-aligned on desktop and centered on mobile. The supplied formal portrait is used in the HTML CV contact card and PDF header. A site-owned post-render adapter adds the HTML image while preserving the native CV renderer and sections. The PDF remains generated from shared CV data. Portrait assets are now supplied; earlier statements that a portrait is unavailable are superseded.

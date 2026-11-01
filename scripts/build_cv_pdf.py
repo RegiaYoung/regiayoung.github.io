@@ -11,7 +11,7 @@ from reportlab.pdfbase.ttfonts import TTFont
 from reportlab.lib import colors
 from reportlab.lib.pagesizes import A4
 from reportlab.lib.styles import ParagraphStyle
-from reportlab.platypus import SimpleDocTemplate, Paragraph, KeepTogether
+from reportlab.platypus import SimpleDocTemplate, Paragraph, KeepTogether, Image, Table, TableStyle
 from pypdf import PdfReader
 
 rl_config.invariant = 1
@@ -43,6 +43,11 @@ def p(s, style=body): return Paragraph(s, style)
 
 story = [p(html.escape(cv['name']), name), p(rich(cv['label']+' | '+cv['location']), small),
     p(link(cv['email'], 'mailto:'+cv['email'])+' &nbsp; | &nbsp; '+link('regia.me', cv['website'])+' &nbsp; | &nbsp; '+link('GitHub', 'https://github.com/RegiaYoung'), small)]
+
+portrait = Image(str(Path(__file__).resolve().parents[1] / 'assets/img/ruijia-cv.jpg'), width=54, height=72)
+header = Table([[story, portrait]], colWidths=[A4[0]-84-66, 66])
+header.setStyle(TableStyle([('VALIGN',(0,0),(-1,-1),'TOP'),('LEFTPADDING',(0,0),(-1,-1),0),('RIGHTPADDING',(0,0),(-1,-1),0),('TOPPADDING',(0,0),(-1,-1),0),('BOTTOMPADDING',(0,0),(-1,-1),0),('ALIGN',(1,0),(1,0),'RIGHT')]))
+story = [header]
 
 for section, items in cv['sections'].items():
     story.append(p(section.upper(), heading))
