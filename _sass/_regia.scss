@@ -255,3 +255,39 @@ body {
     grid-template-columns: 1fr;
   }
 }
+
+.about .profile {
+  max-width: 240px;
+}
+.about .profile img {
+  border-radius: 10px;
+}
+.cv-contact-with-photo {
+  position: relative;
+  padding-right: 135px !important;
+  min-height: 190px;
+}
+.cv-portrait {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  width: 90px;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 4px;
+}
+@media (max-width: 575.98px) {
+  .about .profile {
+    float: none !important;
+    margin: 0 auto 1.5rem;
+    width: 200px;
+  }
+  .cv-contact-with-photo {
+    padding-right: 1rem !important;
+  }
+  .cv-portrait {
+    position: static;
+    align-self: flex-end;
+    margin-bottom: 1rem;
+  }
+}
