@@ -112,11 +112,11 @@ test("CV reuses bibliography data and renders confirmed education, awards, and t
     "Contact Information",
     "Education",
     "Research Interests",
-    "Technical Skills",
     "Publications",
     "Research Experience",
     "Honors and Awards",
     "Teaching",
+    "Technical Skills",
   ]);
   await expect(page.locator("#research-experience + .card li")).toHaveCount(2);
   await expect(page.locator("#research-experience + .card")).toContainText("Doctoral Research.");

@@ -23,11 +23,6 @@ cv:
         end_date: "2024"
     Research Interests:
       - bullet: Machine learning systems; memory-efficient LLM training; heterogeneous and distributed computing.
-    Technical Skills:
-      - bullet: "**Programming & GPU development:** Python, C++, CUDA, Triton."
-      - bullet: "**Frameworks:** PyTorch, FSDP, DeepSpeed (ZeRO), Megatron-LM, verl, vLLM."
-      - bullet: "**Systems optimization:** GPU memory management; model-state/activation offloading; CPU/GPU/NVMe
-          hierarchies; asynchronous execution; compute/communication/I/O overlap; data and expert parallelism."
     Publications: []
     Research Experience:
       - bullet: "**Doctoral Research.** HKUST(GZ), 2024–Present. Developed SlideFormer for single-GPU full-parameter
@@ -55,6 +50,11 @@ cv:
       - bullet: "**DSAA 2042: Computer Architecture and Systems.** Graduate Teaching Assistant, HKUST(GZ), Summer
           2026."
       - bullet: "**DSAA 5003: Automatic Machine Learning.** Graduate Teaching Assistant, HKUST(GZ), Fall 2025."
+    Technical Skills:
+      - bullet: "**Programming & GPU development:** Python, C++, CUDA, Triton."
+      - bullet: "**Frameworks:** PyTorch, FSDP, DeepSpeed (ZeRO), Megatron-LM, verl, vLLM."
+      - bullet: "**Systems optimization:** GPU memory management; model-state/activation offloading; CPU/GPU/NVMe
+          hierarchies; asynchronous execution; compute/communication/I/O overlap; data and expert parallelism."
   publication_status:
     slidedp: Under review
   additional_publications:
