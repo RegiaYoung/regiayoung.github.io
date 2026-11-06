@@ -90,3 +90,11 @@ Follow-up homepage selection (2026-10-26): the user requested that EHR-Bench rem
 ## User-supplied portraits (2026-11-01)
 
 The homepage now uses the native profile field with an adjusted travel portrait, right-aligned on desktop and centered on mobile. The supplied formal portrait is used in the HTML CV contact card and PDF header. A site-owned post-render adapter adds the HTML image while preserving the native CV renderer and sections. The PDF remains generated from shared CV data. Portrait assets are now supplied; earlier statements that a portrait is unavailable are superseded.
+
+## CV skills and download scope (2026-11-06)
+
+The user confirmed a concise Technical Skills section ordered as programming/frameworks, systems optimization, then GPU programming. The emphasis remains training systems and the user's first-author work. It uses native CV bullet entries. No proficiency ratings, internship availability, or separate profiling section are added. The undergraduate major is Computer Science and Technology; Computer Architecture is not an additional degree track.
+
+Teaching remains in the HTML CV and native sidebar. The public PDF intentionally omits it through `_data/cv.yml`'s `pdf.exclude_sections`, passed by the shared export adapter to the renderer. Awards use compact inline formatting in the PDF while retaining the same names, dates, and roles. The renderer validates included and excluded sections; the bibliography remains shared and complete.
+
+Private application materials are maintained outside this public repository and its build inputs. Unreleased research titles, manuscripts, submission details, and private application PDFs must not be added to the public bibliography, assets, or review branches without explicit publication authorization.
