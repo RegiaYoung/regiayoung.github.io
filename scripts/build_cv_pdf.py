@@ -20,6 +20,11 @@ pdfmetrics.registerFont(TTFont("CVSans", str(font_dir / "Vera.ttf")))
 pdfmetrics.registerFont(TTFont("CVSans-Bold", str(font_dir / "VeraBd.ttf")))
 pdfmetrics.registerFontFamily("CVSans", normal="CVSans", bold="CVSans-Bold")
 cv = json.load(sys.stdin)
+excluded_sections = set(cv.get('pdf_options', {}).get('exclude_sections', []))
+unknown_sections = excluded_sections.difference(cv['sections'])
+if unknown_sections:
+    raise ValueError('Unknown PDF exclusions: '+repr(sorted(unknown_sections)))
+sections = {key: value for key, value in cv['sections'].items() if key not in excluded_sections}
 output = Path(sys.argv[1] if len(sys.argv) > 1 else "assets/pdf/Ruijia-Yang-CV.pdf")
 output.parent.mkdir(parents=True, exist_ok=True)
 ink = colors.HexColor("#233f4e")
@@ -49,7 +54,7 @@ header = Table([[story, portrait]], colWidths=[A4[0]-84-66, 66])
 header.setStyle(TableStyle([('VALIGN',(0,0),(-1,-1),'TOP'),('LEFTPADDING',(0,0),(-1,-1),0),('RIGHTPADDING',(0,0),(-1,-1),0),('TOPPADDING',(0,0),(-1,-1),0),('BOTTOMPADDING',(0,0),(-1,-1),0),('ALIGN',(1,0),(1,0),'RIGHT')]))
 story = [header]
 
-for section, items in cv['sections'].items():
+for section, items in sections.items():
     story.append(p(section.upper(), heading))
     for item in items:
         if section == 'Education':
@@ -64,7 +69,7 @@ for section, items in cv['sections'].items():
             source = ('arXiv preprint' if item['publisher']=='Preprint' else item['publisher'])+', '+item['releaseDate']
             story.append(KeepTogether([p('<b>'+html.escape(item['title'])+'</b>'), p(authors+'.',small), p(html.escape(source)+' &nbsp; | &nbsp; '+' · '.join(link(label,url) for label,url in links),small)]))
         elif section == 'Honors and Awards':
-            story.append(p('<b>'+html.escape(clean(item['title']))+'</b> &nbsp; ('+clean(item['date'])+')<br/>'+rich(item['summary'])))
+            story.append(p('<b>'+html.escape(clean(item['title']))+'</b> ('+clean(item['date'])+'). '+rich(item['summary'])))
         elif 'bullet' in item:
             story.append(p(rich(item['bullet'])))
         else:
@@ -80,8 +85,10 @@ doc.build(story,onFirstPage=footer,onLaterPages=footer)
 # Check the generated document's real text, not just whether a file was written.
 reader = PdfReader(output)
 text = " ".join(" ".join(page.extract_text().split()) for page in reader.pages)
-for section in cv['sections']:
+for section in sections:
     assert section.upper() in text, section
+for section in excluded_sections:
+    assert section.upper() not in text, 'Excluded section appeared in PDF: '+section
 for entry in cv['sections']['Publications']:
     assert " ".join(entry['title'].split()) in text, entry['title']
     assert all(author in text for author in entry['authors']), entry['authors']

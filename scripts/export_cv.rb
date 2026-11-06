@@ -6,4 +6,5 @@ require_relative "../_plugins/cv_publications"
 site = Jekyll::Site.new(Jekyll.configuration("source" => File.expand_path("..", __dir__), "quiet" => true))
 site.read
 Regia::CvPublications.new.generate(site)
-puts JSON.generate(site.data.fetch("cv").fetch("cv"))
+cv_data = site.data.fetch("cv")
+puts JSON.generate(cv_data.fetch("cv").merge("pdf_options" => cv_data.fetch("pdf", {})))

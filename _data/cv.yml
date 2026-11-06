@@ -18,11 +18,18 @@ cv:
           - "Advisor: Prof. Zeyi Wen"
       - institution: Sun Yat-sen University
         studyType: Bachelor of Engineering
-        area: Computer Science and Technology, Computer Architecture
+        area: Computer Science and Technology
         start_date: "2020"
         end_date: "2024"
     Research Interests:
       - bullet: Machine learning systems; memory-efficient LLM training; heterogeneous and distributed computing.
+    Technical Skills:
+      - bullet: "**Programming and frameworks:** Python, PyTorch (FSDP/FSDP2), DeepSpeed (ZeRO), Megatron-LM, verl, vLLM."
+      - bullet: >-
+          **Systems optimization:** GPU memory management; model-state and activation offloading;
+          CPU/GPU/NVMe memory and storage hierarchies; asynchronous execution;
+          computation, communication, and I/O overlap.
+      - bullet: "**GPU programming:** CUDA, Triton."
     # Populated from _bibliography/papers.bib by _plugins/cv_publications.rb.
     Publications: []
     Research Experience:
@@ -58,3 +65,8 @@ cv:
       - bullet: >-
           **DSAA 5003: Automatic Machine Learning.**
           Graduate Teaching Assistant, HKUST(GZ), Fall 2025.
+
+# The website retains the full academic record; the public download omits teaching.
+pdf:
+  exclude_sections:
+    - Teaching
