@@ -98,21 +98,32 @@ test("CV reuses bibliography data and renders confirmed education, awards, and t
   await page.goto("/publications/");
   const titles = (await page.locator(".bibliography .title").allTextContents()).map((title) => title.trim());
   await page.goto("/cv/");
-  const publications = page.locator("#first-author-research + .card, #other-research + .card");
+  const publications = page.locator("#publications + .card");
+  await expect(publications.locator(".title")).toHaveCount(7);
   for (const title of titles) {
     await expect(publications.locator("li").filter({ hasText: title })).toHaveCount(1);
   }
-  await expect(page.locator("#first-author-research + .card li")).toHaveCount(4);
-  await expect(page.locator("#other-research + .card li")).toHaveCount(3);
   for (const title of ["OOM:", "CTRL:", "Dovetail:"]) {
     const entry = publications.locator("li").filter({ hasText: title });
     await expect(entry).toContainText("Under review");
     await expect(entry.locator("a")).toHaveCount(0);
   }
-  await expect(page.locator(".cv h3").last()).toHaveText("Technical Skills");
+  await expect(page.locator(".cv h3")).toHaveText([
+    "Contact Information",
+    "Education",
+    "Research Interests",
+    "Technical Skills",
+    "Publications",
+    "Research Experience",
+    "Honors and Awards",
+    "Teaching",
+  ]);
+  await expect(page.locator("#research-experience + .card li")).toHaveCount(2);
+  await expect(page.locator("#research-experience + .card")).toContainText("Doctoral Research.");
   await expect(page.locator("#technical-skills + .card")).toContainText("C++");
   await expect(page.locator("#technical-skills + .card")).not.toContainText("FSDP2");
   const slidedp = publications.locator("li").filter({ hasText: "SlideDP:" });
+  await expect(slidedp).toContainText("Under review");
   await expect(slidedp).toContainText("Ruijia Yang, Shiyuan Lin, Yulong Ao, Zhiyu Li, Yingli Zhao, Xianduo Li, Yonghua Lin, Zeyi Wen.");
   await expect(slidedp.getByRole("link", { name: "PDF", exact: true })).toHaveAttribute("href", "https://arxiv.org/pdf/2609.34162");
   await expect(slidedp.getByRole("link", { name: "Code", exact: true })).toHaveAttribute("href", "https://github.com/RegiaYoung/SlideDP");

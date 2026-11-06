@@ -22,52 +22,16 @@ cv:
         start_date: "2020"
         end_date: "2024"
     Research Interests:
-      - bullet: Efficient LLM training; heterogeneous and distributed systems.
-    First-Author Research:
-      - bib_key: slideformer
-        role: First author
-        system: SlideFormer
-        contribution: Developed a layer-sliding PyTorch runtime for full-parameter fine-tuning of 100B+ models on
-          a single commodity GPU. Coordinated model-state and activation offloading across CPU/GPU/NVMe, overlapping
-          data transfers, CPU optimizer updates, and GPU computation; achieved 1.40-6.27x throughput over evaluated
-          offloading baselines.
-      - bib_key: slidedp
-        role: First author
-        contribution: Designed synchronous data-parallel fine-tuning around shared host-resident state, pipelining
-          parameter delivery, gradient reduction, CPU updates, and GPU computation. Enabled Qwen2.5-72B fine-tuning
-          on four RTX 4090 GPUs. Reference code is public; the optimized runtime is not yet released.
-      - title: "OOM: Offload-Optimized Full-Parameter MoE Training via Memory-Execution Co-Design"
-        role: First author
-        year: "2026"
-        contribution: "Co-designed expert execution and memory allocation for offloaded MoE training: jointly planned
-          expert-state residency and activation retention, bounded local-execution worksets, and reduced recomputation.
-          Combined calibrated cost models with short trial runs to select configurations within GPU and host-memory
-          budgets."
-        status: Under review
-      - title: "CTRL: Concurrent Training and Rollout on Every GPU for LLM Reinforcement Learning"
-        role: First author
-        year: "2026"
-        contribution: Built concurrent learner updates and rollout on every GPU using host-managed policy versions
-          and a bounded GPU layer window. Integrated verl and vLLM, coordinating incremental weight publication, bounded
-          policy staleness, and training/rollout resource allocation.
-        status: Under review
-    Other Research:
-      - bib_key: ehrbench
-        role: First author
-      - bib_key: loreml
-        role: Second author
-      - title: "Dovetail: Enabling FP4 KV Cache for Efficient LLM Serving on FP8-Capable GPUs"
-        role: Third author
-        year: "2026"
-        authors:
-          - Chengxi Liao
-          - Yilin Liu
-          - Ruijia Yang
-          - Zeyi Wen
-        contribution: Co-authored work on persistent FP4 KV storage, FP8 attention kernels, and paged vLLM serving,
-          with a unified compressed cache for decode and cached-prefix append.
-        status: Under review
-    Earlier Research Experience:
+      - bullet: Machine learning systems; memory-efficient LLM training; heterogeneous and distributed computing.
+    Technical Skills:
+      - bullet: "**Programming & GPU development:** Python, C++, CUDA, Triton."
+      - bullet: "**Frameworks:** PyTorch, FSDP, DeepSpeed (ZeRO), Megatron-LM, verl, vLLM."
+      - bullet: "**Systems optimization:** GPU memory management; model-state/activation offloading; CPU/GPU/NVMe
+          hierarchies; asynchronous execution; compute/communication/I/O overlap; data and expert parallelism."
+    Publications: []
+    Research Experience:
+      - bullet: "**Doctoral Research.** HKUST(GZ), 2024–Present. Developed SlideFormer for single-GPU full-parameter
+          fine-tuning and SlideDP for multi-GPU scaling through heterogeneous execution and model-state offloading."
       - bullet: "**Undergraduate Research.** National Supercomputing Center in Guangzhou, 2021–2023. Supervisor: Zhiguang
           Chen. Studied key-value storage and distributed databases, focusing on workload-specific optimization of
           LevelDB."
@@ -91,12 +55,25 @@ cv:
       - bullet: "**DSAA 2042: Computer Architecture and Systems.** Graduate Teaching Assistant, HKUST(GZ), Summer
           2026."
       - bullet: "**DSAA 5003: Automatic Machine Learning.** Graduate Teaching Assistant, HKUST(GZ), Fall 2025."
-    Technical Skills:
-      - bullet: "**Programming & GPU development:** Python, C++, CUDA, Triton."
-      - bullet: "**Frameworks:** PyTorch, FSDP, DeepSpeed (ZeRO), Megatron-LM, verl, vLLM."
-      - bullet: "**Systems optimization:** GPU memory management; model-state/activation offloading; CPU/GPU/NVMe
-          hierarchies; asynchronous execution; compute/communication/I/O overlap; data and expert parallelism."
+  publication_status:
+    slidedp: Under review
+  additional_publications:
+    - title: "OOM: Offload-Optimized Full-Parameter MoE Training via Memory-Execution Co-Design"
+      publisher: Under review
+      releaseDate: "2026"
+      author_note: "First author: Ruijia Yang."
+    - title: "CTRL: Concurrent Training and Rollout on Every GPU for LLM Reinforcement Learning"
+      publisher: Under review
+      releaseDate: "2026"
+      author_note: "First author: Ruijia Yang."
+    - title: "Dovetail: Enabling FP4 KV Cache for Efficient LLM Serving on FP8-Capable GPUs"
+      publisher: Under review
+      releaseDate: "2026"
+      authors:
+        - Chengxi Liao
+        - Yilin Liu
+        - Ruijia Yang
+        - Zeyi Wen
 pdf:
   exclude_sections:
     - Teaching
-    - Research Interests
