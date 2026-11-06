@@ -98,15 +98,28 @@ test("CV reuses bibliography data and renders confirmed education, awards, and t
   await page.goto("/publications/");
   const titles = (await page.locator(".bibliography .title").allTextContents()).map((title) => title.trim());
   await page.goto("/cv/");
-  const publications = page.locator("#publications + .card");
-  await expect(publications.locator(".title")).toHaveText(titles);
+  const publications = page.locator("#first-author-research + .card, #other-research + .card");
+  for (const title of titles) {
+    await expect(publications.locator("li").filter({ hasText: title })).toHaveCount(1);
+  }
+  await expect(page.locator("#first-author-research + .card li")).toHaveCount(4);
+  await expect(page.locator("#other-research + .card li")).toHaveCount(3);
+  for (const title of ["OOM:", "CTRL:", "Dovetail:"]) {
+    const entry = publications.locator("li").filter({ hasText: title });
+    await expect(entry).toContainText("Under review");
+    await expect(entry.locator("a")).toHaveCount(0);
+  }
+  await expect(page.locator(".cv h3").last()).toHaveText("Technical Skills");
+  await expect(page.locator("#technical-skills + .card")).toContainText("C++");
+  await expect(page.locator("#technical-skills + .card")).not.toContainText("FSDP2");
   const slidedp = publications.locator("li").filter({ hasText: "SlideDP:" });
   await expect(slidedp).toContainText("Ruijia Yang, Shiyuan Lin, Yulong Ao, Zhiyu Li, Yingli Zhao, Xianduo Li, Yonghua Lin, Zeyi Wen.");
   await expect(slidedp.getByRole("link", { name: "PDF", exact: true })).toHaveAttribute("href", "https://arxiv.org/pdf/2609.34162");
   await expect(slidedp.getByRole("link", { name: "Code", exact: true })).toHaveAttribute("href", "https://github.com/RegiaYoung/SlideDP");
   await expect(page.locator("#education + .card")).toContainText("Bachelor of Engineering");
   const awards = page.locator("#honors-and-awards + .card");
-  await expect(awards).toContainText("Advisor to the HKUST(GZ) team.");
+  await expect(awards).toContainText("First Prize. Advisor.");
+  await expect(awards).not.toContainText("HKUST(GZ) team");
   await expect(awards).toContainText("4th Place. Team Leader.");
   await expect(awards).toContainText("10th ASC Student Supercomputer Challenge (22-23)");
   await expect(awards).toContainText("2020–2023");
