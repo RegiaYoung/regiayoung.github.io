@@ -28,9 +28,9 @@ sections = {key: value for key, value in cv['sections'].items() if key not in ex
 output = Path(sys.argv[1] if len(sys.argv) > 1 else "assets/pdf/Ruijia-Yang-CV.pdf")
 output.parent.mkdir(parents=True, exist_ok=True)
 ink = colors.HexColor("#233f4e")
-body = ParagraphStyle("body", fontName="CVSans", fontSize=9.2, leading=12, spaceAfter=4, textColor=colors.HexColor("#222222"))
-small = ParagraphStyle("small", parent=body, fontSize=8.5, leading=11, spaceAfter=3)
-heading = ParagraphStyle("heading", parent=body, fontName="CVSans-Bold", fontSize=11, textColor=ink, spaceBefore=10, spaceAfter=5, keepWithNext=True)
+body = ParagraphStyle("body", fontName="CVSans", fontSize=8.8, leading=11.6, spaceAfter=1.8, textColor=colors.HexColor("#222222"))
+small = ParagraphStyle("small", parent=body, fontSize=8.1, leading=10.8, spaceAfter=2)
+heading = ParagraphStyle("heading", parent=body, fontName="CVSans-Bold", fontSize=10.8, leading=14, textColor=ink, spaceBefore=5, spaceAfter=3, keepWithNext=True)
 name = ParagraphStyle("name", parent=body, fontSize=25, leading=29, textColor=ink, spaceAfter=5)
 
 def clean(s):
@@ -46,10 +46,10 @@ def link(label, url):
 
 def p(s, style=body): return Paragraph(s, style)
 
-story = [p(html.escape(cv['name']), name), p(rich(cv['label']+' | '+cv['location']), small),
+story = [p(html.escape(cv['name']), name), p(rich(cv['label']+' | Efficient LLM training; heterogeneous and distributed systems'), small),
     p(link(cv['email'], 'mailto:'+cv['email'])+' &nbsp; | &nbsp; '+link('regia.me', cv['website'])+' &nbsp; | &nbsp; '+link('GitHub', 'https://github.com/RegiaYoung'), small)]
 
-portrait = Image(str(Path(__file__).resolve().parents[1] / 'assets/img/ruijia-cv.jpg'), width=54, height=72)
+portrait = Image(str(Path(__file__).resolve().parents[1] / 'assets/img/ruijia-cv.jpg'), width=39, height=52)
 header = Table([[story, portrait]], colWidths=[A4[0]-84-66, 66])
 header.setStyle(TableStyle([('VALIGN',(0,0),(-1,-1),'TOP'),('LEFTPADDING',(0,0),(-1,-1),0),('RIGHTPADDING',(0,0),(-1,-1),0),('TOPPADDING',(0,0),(-1,-1),0),('BOTTOMPADDING',(0,0),(-1,-1),0),('ALIGN',(1,0),(1,0),'RIGHT')]))
 story = [header]
@@ -63,11 +63,16 @@ for section, items in sections.items():
             text = item['studyType']+' in '+item['area']
             if item.get('highlights'): text += '. '+ '; '.join(item['highlights'])
             story.append(p(rich(text)))
-        elif section == 'Publications':
-            authors = ', '.join('<b>'+html.escape(a)+'</b>' if a==cv['name'] else html.escape(a) for a in item['authors'])
-            links = re.findall(r'\[([^]]+)\]\(<([^>]+)>\)',item['summary'])
-            source = ('arXiv preprint' if item['publisher']=='Preprint' else item['publisher'])+', '+item['releaseDate']
-            story.append(KeepTogether([p('<b>'+html.escape(item['title'])+'</b>'), p(authors+'.',small), p(html.escape(source)+' &nbsp; | &nbsp; '+' · '.join(link(label,url) for label,url in links),small)]))
+        elif item.get('research'):
+            meta = ' | '.join(x for x in [item['role'], ' '.join(filter(None, [item.get('venue'), item['year']])), item.get('status')] if x)
+            links = item.get('links', {})
+            selected = {label: links[label] for label in ['PDF', 'Code'] if label in links}
+            if not selected and links: selected = {next(iter(links)): next(iter(links.values()))}
+            line = html.escape(meta)
+            if selected: line += ' &nbsp; | &nbsp; '+' / '.join(link(label,url) for label,url in selected.items())
+            block = [p('<b>'+html.escape(item['display_title'])+'</b>'), p(line,small)]
+            if item.get('contribution'): block.append(p(html.escape(item['contribution'])))
+            story.append(KeepTogether(block))
         elif section == 'Honors and Awards':
             story.append(p('<b>'+html.escape(clean(item['title']))+'</b> ('+clean(item['date'])+'). '+rich(item['summary'])))
         elif 'bullet' in item:
@@ -79,7 +84,7 @@ def footer(canvas, doc):
     canvas.saveState();canvas.setFont('CVSans',8);canvas.setFillColor(ink)
     canvas.drawString(42,25,'Ruijia Yang  |  regia.me/cv/');canvas.drawRightString(A4[0]-42,25,str(doc.page));canvas.restoreState()
 
-doc = SimpleDocTemplate(str(output), pagesize=A4, leftMargin=42, rightMargin=42, topMargin=32, bottomMargin=38,
+doc = SimpleDocTemplate(str(output), pagesize=A4, leftMargin=40, rightMargin=40, topMargin=26, bottomMargin=34,
     title='Ruijia Yang - Curriculum Vitae', author=cv['name'])
 doc.build(story,onFirstPage=footer,onLaterPages=footer)
 # Check the generated document's real text, not just whether a file was written.
@@ -89,8 +94,10 @@ for section in sections:
     assert section.upper() in text, section
 for section in excluded_sections:
     assert section.upper() not in text, 'Excluded section appeared in PDF: '+section
-for entry in cv['sections']['Publications']:
-    assert " ".join(entry['title'].split()) in text, entry['title']
-    assert all(author in text for author in entry['authors']), entry['authors']
+for entries in sections.values():
+    for entry in entries:
+        if entry.get('research'):
+            assert " ".join(entry['title'].split()) in text, entry['title']
+            assert text.count(" ".join(entry['title'].split())) == 1, entry['title']
 assert cv['email'] in text and 'Sun Yat-sen University' in text
 print('Generated and verified '+str(output),file=sys.stderr)
