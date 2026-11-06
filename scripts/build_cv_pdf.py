@@ -46,7 +46,7 @@ def link(label, url):
 
 def p(s, style=body): return Paragraph(s, style)
 
-story = [p(html.escape(cv['name']), name), p(rich(cv['label']+' | Efficient LLM training; heterogeneous and distributed systems'), small),
+story = [p(html.escape(cv['name']), name), p(rich(cv['label']+' | '+cv['location']), small),
     p(link(cv['email'], 'mailto:'+cv['email'])+' &nbsp; | &nbsp; '+link('regia.me', cv['website'])+' &nbsp; | &nbsp; '+link('GitHub', 'https://github.com/RegiaYoung'), small)]
 
 portrait = Image(str(Path(__file__).resolve().parents[1] / 'assets/img/ruijia-cv.jpg'), width=39, height=52)
@@ -63,16 +63,12 @@ for section, items in sections.items():
             text = item['studyType']+' in '+item['area']
             if item.get('highlights'): text += '. '+ '; '.join(item['highlights'])
             story.append(p(rich(text)))
-        elif item.get('research'):
-            meta = ' | '.join(x for x in [item['role'], ' '.join(filter(None, [item.get('venue'), item['year']])), item.get('status')] if x)
-            links = item.get('links', {})
-            selected = {label: links[label] for label in ['PDF', 'Code'] if label in links}
-            if not selected and links: selected = {next(iter(links)): next(iter(links.values()))}
-            line = html.escape(meta)
-            if selected: line += ' &nbsp; | &nbsp; '+' / '.join(link(label,url) for label,url in selected.items())
-            block = [p('<b>'+html.escape(item['display_title'])+'</b>'), p(line,small)]
-            if item.get('contribution'): block.append(p(html.escape(item['contribution'])))
-            story.append(KeepTogether(block))
+        elif section == 'Publications':
+            authors = ', '.join('<b>'+html.escape(a)+'</b>' if a==cv['name'] else html.escape(a) for a in item['authors'])
+            author_line = authors+'.' if authors else html.escape(item.get('author_note', ''))
+            links = re.findall(r'\[([^]]+)\]\(<([^>]+)>\)',item['summary'])
+            source = ('arXiv preprint' if item['publisher']=='Preprint' else item['publisher'])+', '+item['releaseDate']
+            story.append(KeepTogether([p('<b>'+html.escape(item['title'])+'</b>'), p(author_line,small), p(html.escape(source)+(' &nbsp; | &nbsp; '+' · '.join(link(label,url) for label,url in links) if links else ''),small)]))
         elif section == 'Honors and Awards':
             story.append(p('<b>'+html.escape(clean(item['title']))+'</b> ('+clean(item['date'])+'). '+rich(item['summary'])))
         elif 'bullet' in item:
@@ -94,10 +90,8 @@ for section in sections:
     assert section.upper() in text, section
 for section in excluded_sections:
     assert section.upper() not in text, 'Excluded section appeared in PDF: '+section
-for entries in sections.values():
-    for entry in entries:
-        if entry.get('research'):
-            assert " ".join(entry['title'].split()) in text, entry['title']
-            assert text.count(" ".join(entry['title'].split())) == 1, entry['title']
+for entry in cv['sections']['Publications']:
+    assert " ".join(entry['title'].split()) in text, entry['title']
+    assert all(author in text for author in entry['authors']), entry['authors']
 assert cv['email'] in text and 'Sun Yat-sen University' in text
 print('Generated and verified '+str(output),file=sys.stderr)

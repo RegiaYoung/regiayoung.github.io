@@ -9,5 +9,5 @@ cv_portrait: /assets/img/ruijia-cv.jpg
 cv_pdf: /assets/pdf/Ruijia-Yang-CV.pdf
 toc:
   sidebar: left
-description: Education, research contributions, honors, teaching, and technical skills.
+description: Education, technical skills, publications, research, honors, and teaching.
 ---
